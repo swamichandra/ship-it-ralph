@@ -1,4 +1,5 @@
 # Ship it Ralph
+
 **A spec-driven AI Skill that turns one sentence into a working full-stack app.**
 
 AI makes writing code fast — but without a spec, fixing almost-working code takes longer than building it from scratch.
@@ -7,13 +8,11 @@ Ralph is a **Skill** for GitHub Copilot, Cursor, Claude Code, and Google Antigra
 
 Ralph follows *Spec-Driven Development* through the Ralph Wiggum Loop (nine autonomous phases) — writing the spec before the code, breaking it into tasks, writing tests against those tasks, then building. Every file generated against a contract.
 
-That is the difference. Not a faster way to prompt. A different way to build.
+Not a faster way to prompt. A different way to build.
 
 *For developers who want an app built right, not just built fast.*
 
-![Ship it Ralph](logo.png "Ralph")
-
----
+-----
 
 ## Quick start
 
@@ -40,9 +39,9 @@ cd my-app && npm run install:all && npm run dev
 # Client → localhost:5173   API → localhost:3001
 ```
 
----
+-----
 
-## In 30 seconds
+## What does the Skill produce: In 30 seconds
 
 ```
 Output from: /factory a subscription tracker that warns before renewals
@@ -56,7 +55,7 @@ Output from: /factory a subscription tracker that warns before renewals
   npm run dev → localhost:5173
 ```
 
----
+-----
 
 ## What this is
 
@@ -64,7 +63,7 @@ Ralph is a structured Skill file — a single markdown document in your `.github
 
 The quality of the output is determined by the quality of the spec — not the quality of your prompt. That distinction is the entire design.
 
----
+-----
 
 ## Why specs enable autonomy
 
@@ -72,15 +71,15 @@ Ralph eliminates guessing by producing three artifacts before any implementation
 
 **spec.md** — every entity and its fields, every API route and its expected shape, every screen and its purpose. Written in phase 4, before the engineer phase has touched a file.
 
-**tasks.md** — the spec decomposed into 12–18 atomic tasks. Not "build the frontend" — build `InvoiceList.jsx`, build `POST /api/invoices`. Each task is one file or one verifiable behavior.
+**tasks.md** — the spec decomposed into 12–18 atomic tasks. Not “build the frontend” — build `InvoiceList.jsx`, build `POST /api/invoices`. Each task is one file or one verifiable behavior.
 
-**tests/** — Vitest specs written in phase 6, from the task list, before the server exists. They define what "done" means for each job. They will fail until the build completes. That is the intended sequence.
+**tests/** — Vitest specs written in phase 6, from the task list, before the server exists. They define what “done” means for each job. They will fail until the build completes. That is the intended sequence.
 
 When phase 7 runs, the agent is not guessing. It has a spec that defines every entity, a task list that defines the build order, and tests that define the acceptance criteria. A clear spec produces a complete app. A vague spec produces a vague app.
 
 This is why the input is one sentence. The first phase restates your idea in plain language — if it cannot be explained simply, it cannot be specced precisely, and it cannot be built autonomously.
 
----
+-----
 
 ## Why Ship it Ralph
 
@@ -96,24 +95,24 @@ This is why the input is one sentence. The first phase restates your idea in pla
 
 Ralph is purpose-built for one thing: a developer with an idea who wants a running, specced, tested full-stack app in one autonomous session.
 
----
+-----
 
 ## TL;DR — the phases
 
-| # | Phase | What it does |
-|---|---|---|
-| 0 | Intake | Restates your idea in plain English. Catches vague specs before they become bad code. |
-| 1 | PM | Locks the product name, jobs-to-be-done, and five MVP features. Nothing more. |
-| 2 | Architect | Decides the stack, data entities, and every API route. |
-| 3 | Design | Defines the screens, their slugs, and the visual system. |
-| 4 | Spec | Writes `spec.md` — the source of truth. Everything downstream builds against this. |
-| 5 | Tasks | Breaks the spec into 12–18 atomic tasks. One task = one file or one behavior. |
-| 6 | Tests | Writes Vitest specs from the task list — before the server exists. They will fail. That is correct. |
-| 7A | Server | Builds Express, SQLite, routes. Confirms the server starts before touching the client. |
-| 7B | Client | Builds React, Vite, Tailwind, all screens. Against the spec, not the original prompt. |
-| 8 | Security | OWASP pass, auto-fixes, verdict: SHIP / SHIP WITH NOTES / DO NOT SHIP. |
+|# |Phase    |What it does                                                                                       |
+|--|---------|---------------------------------------------------------------------------------------------------|
+|0 |Intake   |Restates your idea in plain English. Catches vague specs before they become bad code.              |
+|1 |PM       |Locks the product name, jobs-to-be-done, and five MVP features. Nothing more.                      |
+|2 |Architect|Decides the stack, data entities, and every API route.                                             |
+|3 |Design   |Defines the screens, their slugs, and the visual system.                                           |
+|4 |Spec     |Writes `spec.md` — the source of truth. Everything downstream builds against this.                 |
+|5 |Tasks    |Breaks the spec into 12–18 atomic tasks. One task = one file or one behavior.                      |
+|6 |Tests    |Writes Vitest specs from the task list — before the server exists. They will fail. That is correct.|
+|7A|Server   |Builds Express, SQLite, routes. Confirms the server starts before touching the client.             |
+|7B|Client   |Builds React, Vite, Tailwind, all screens. Against the spec, not the original prompt.              |
+|8 |Security |OWASP pass, auto-fixes, verdict: SHIP / SHIP WITH NOTES / DO NOT SHIP.                             |
 
----
+-----
 
 ## How it works
 
@@ -163,7 +162,7 @@ flowchart TD
     style CONTINUE stroke:#666,stroke-dasharray:4
 ```
 
----
+-----
 
 ## Optional: review the spec before building
 
@@ -175,34 +174,34 @@ By default the factory runs straight through. To pause after `spec.md` is writte
 
 The factory writes `spec.md` and stops. Read it. Edit it directly if anything is wrong. Type `/approve` to continue — the build picks up any edits and runs fully autonomous from that point.
 
----
+-----
 
 ## Re-run a phase
 
 All triggers require `spec.md` in the project root.
 
-| Trigger | Reruns | Use when |
-|---|---|---|
-| `--review` + `/approve` | Phases 0–4, pause, then 5–8 | Review spec before building |
-| `/redesign` | Phase 3 + 7B | Server works, want different layout or screens |
-| `/respec` | Phases 1–5 | Expanding scope — no code touched |
-| `/rebuild` | Phases 7A + 7B + 8 | Last build truncated or spec was edited |
-| `/retask` | Phase 5 | Edited `spec.md` manually, need `tasks.md` to match |
+|Trigger                |Reruns                     |Use when                                           |
+|-----------------------|---------------------------|---------------------------------------------------|
+|`--review` + `/approve`|Phases 0–4, pause, then 5–8|Review spec before building                        |
+|`/redesign`            |Phase 3 + 7B               |Server works, want different layout or screens     |
+|`/respec`              |Phases 1–5                 |Expanding scope — no code touched                  |
+|`/rebuild`             |Phases 7A + 7B + 8         |Last build truncated or spec was edited            |
+|`/retask`              |Phase 5                    |Edited `spec.md` manually, need `tasks.md` to match|
 
----
+-----
 
 ## After the build
 
 Read `spec.md` before touching anything. It documents what was built and why.
 
-| File | Why |
-|---|---|
-| `server/db/seed.js` | Replace demo records with data from your real domain |
-| `client/src/pages/` | Edit labels, fields, and layout per screen |
-| `server/db/schema.js` | Change `':memory:'` to `'file:local.db'` for persistence |
-| `constitution.md` | Amend before adding a developer or running the factory again |
+|File                 |Why                                                         |
+|---------------------|------------------------------------------------------------|
+|`server/db/seed.js`  |Replace demo records with data from your real domain        |
+|`client/src/pages/`  |Edit labels, fields, and layout per screen                  |
+|`server/db/schema.js`|Change `':memory:'` to `'file:local.db'` for persistence    |
+|`constitution.md`    |Amend before adding a developer or running the factory again|
 
----
+-----
 
 ## Tool setup
 
@@ -214,7 +213,7 @@ Read `spec.md` before touching anything. It documents what was built and why.
 
 **Google Antigravity** — Create `.agents/skills/ship-it-ralph/` in your workspace. Copy `SKILL.md` there. Put the three reference files in a `resources/` subfolder.
 
----
+-----
 
 ## More ideas
 
@@ -227,7 +226,7 @@ Read `spec.md` before touching anything. It documents what was built and why.
 /factory an event RSVP tool with waitlist and attendance
 ```
 
----
+-----
 
 ## Limitations
 
@@ -235,7 +234,7 @@ The factory does not generate OAuth, payments, email, file uploads, or websocket
 
 API tests require a running server. Run `npm run dev:server` before `npm test`.
 
----
+-----
 
 ## Repo
 
@@ -252,6 +251,6 @@ PRs welcome. Test any change to `SKILL.md` against three different ideas before 
 
 [Issues](https://github.com/swamichandra/ship-it-ralph/issues) · MIT License
 
----
+-----
 
 *Ship it Ralph · v1.0.0 · Swami Chandrasekaran*
