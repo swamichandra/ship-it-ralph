@@ -1,5 +1,5 @@
 # Ship it Ralph
-**A spec-driven AI Skill — one sentence in, tested full-stack app out.**
+**A spec-driven AI Skill — one sentence in, Ralph writes the spec, tested full-stack app out.**
 
 Ship it Ralph is a **Skill** for GitHub Copilot, Cursor, Claude Code, and Google 
 Antigravity that runs the entire loop *autonomously*.
@@ -64,7 +64,7 @@ Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required 
 ---
 
 ## Why Ship-it-Ralph?
-**Spec-First** Most coding tools asks you to write or co-author the spec. Ship-it-Ralph produces it from your one-sentence idea. You do not need to know how to write a specification document to get a complete one. If the spec is wrong, you catch it in Phase 4 before a single line of implementation is written. The quality of the output is determined by the quality of the spec — not the quality of your prompt. That distinction is the entire design.
+**Spec-First** Most coding tools asks you to write or co-author the spec. Ship-it-Ralph produces it from your one-sentence idea. You do not need to know how to write a specification document to get a complete one. Ralph writes the spec from the user’s sentence If the spec is wrong, you catch it in Phase 4 before a single line of implementation is written. The quality of the output is determined by the quality of the spec — not the quality of your prompt. That distinction is the entire design.
 
 **Zero Install Portability.** Copy one folder. No CLI, no global npm package, no new IDE, no account. Works inside the tools you already use.
 
