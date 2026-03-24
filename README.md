@@ -15,6 +15,16 @@ across nine autonomous phases — the core of which is the
 ![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 
 ---
+## What's in the box
+
+| File | Purpose |
+|---|---|
+| `SKILL.md` | The Ralph Wiggum inspired sepc-driven dev factory. One file. Drives the entire autonomous build loop. |
+| `DESIGN_SYSTEM.md` | The visual contract. Every component, and pattern the generated UI must follow. Change as needed.|
+| `STACK.md` | The engineering contract. File templates for Express, Vite, libsql, and Vitest. |
+| `CONSTITUTION.md` | The project contract. Immutable rules every future agent and developer must follow. |
+
+---
 
 ## ⚡️Quick start
 *Ship-it-Ralph is purpose-built for one thing: a developer with an idea who wants a running, specced, tested full-stack app in one autonomous session.*
