@@ -1,5 +1,5 @@
 ---
-name: ship-it-ralph
+name: software-factory
 author: Swami Chandrasekaran
 description: >
   Autonomous full-stack software factory. Spec-driven. Builds a working React + Node
@@ -95,12 +95,13 @@ OUTPUT: see references/STACK.md for folder structure
 
 ## PHASE 3 — DESIGN
 
-Read references/DESIGN_SYSTEM.md. Inherit NOVA Eclipse fully.
+Read references/DESIGN_SYSTEM.md. Inherit the Ralph Design System fully.
 Override accent only if the domain genuinely calls for it.
 
 ```
-PALETTE:  NOVA Eclipse [OR] OVERRIDE: accent=[hex] accent2=[hex] because [reason]
+PALETTE:  Ralph Design System [OR] OVERRIDE: accent=[hex] accent2=[hex] because [reason]
 LAYOUT:   [sidebar-nav | top-nav | dashboard-grid | single-column]
+AI-UX:    [AMBIENT | CONVERSATIONAL | NONE]
 SCREENS (max 4, in build priority order):
   1. [Name] | slug:[slug] | primary-action:[1 thing] | hero:[stat-grid|list|chart|form] | components:[list]
   2. [Name] | slug:[slug] | primary-action:[1 thing] | components:[list]
@@ -209,7 +210,7 @@ FILE: tasks.md
 ## Client (Phase 7B)
 - [ ] T09 client/package.json, vite.config.js, tailwind.config.js, postcss.config.js
 - [ ] T10 client/index.html — Vite entry point
-- [ ] T11 client/src/index.css — NOVA Eclipse vars and reset
+- [ ] T11 client/src/index.css — Ralph Design System vars and reset
 - [ ] T12 client/src/lib/api.js — fetch helpers per route
 - [ ] T13 Shared components: [list from Phase 3]
 - [ ] T14 [Screen 1] page — [primary action]
@@ -307,7 +308,7 @@ FILE: constitution.md
 - Dates span at least 12 months. Mix of past and future.
 
 ## Design Principles
-- NOVA Eclipse design system. Read DESIGN_SYSTEM.md before writing UI.
+- Ralph Design System (Eclipse Edition). Read DESIGN_SYSTEM.md before writing UI.
 - Dark mode is default. ModeToggle always present in nav.
 - Every data screen has an empty state.
 - Every list has a live search filter.
@@ -359,13 +360,13 @@ Check off each client task from tasks.md as it is completed.
 
 Files to write, in this order:
 
-1. client/package.json — react, react-dom, react-router-dom, recharts, vite, tailwind, vitest
+1. client/package.json — react, react-dom, react-router-dom, recharts, iconoir-react, vite, tailwind, vitest
 2. client/index.html — Vite entry, mounts #root
 3. client/vite.config.js — proxy /api to :3001
 4. client/vitest.config.js
 5. client/tailwind.config.js
 6. client/postcss.config.js
-7. client/src/index.css — full NOVA Eclipse CSS from STACK.md, paste verbatim
+7. client/src/index.css — full Ralph Design System CSS from STACK.md, paste verbatim
 8. client/src/lib/api.js — typed fetch helpers per route
 9. client/src/components/[component].jsx — one file per component from Phase 3
 10. client/src/pages/[page].jsx — one file per screen, Phase 3 priority order
@@ -427,7 +428,7 @@ FACTORY COMPLETE
 
   App:        [name]
   Stack:      React + Vite · Express · libsql
-  Design:     NOVA Eclipse · Dark and Light
+  Design:     Ralph Design System · Dark and Light
   Spec:       spec.md
   Tasks:      tasks.md · [n] tasks checked
   Tests:      written before code
@@ -574,11 +575,11 @@ RETASK COMPLETE
 | Tests | Written in Phase 6 before Phase 7A. Expected to fail until built. |
 | Constitution | First file written in Phase 7A. Immutable. |
 | Stack | React + Vite + Tailwind · Express + Node · libsql |
-| Design | NOVA Eclipse — read DESIGN_SYSTEM.md before Phase 3 |
+| Design | Ralph Design System — read DESIGN_SYSTEM.md before Phase 3 |
 | Colors | Zero hardcoded hex. Every color is var(--token). |
 | Ralph | Phase 0 restate and DEFERRED tags only. Nowhere else. |
 | Phases 6 and 8 | Always emitted. Never skipped. Never merged. |
 
 ---
 
-Ralph Wiggum Loop · v7.0 · Spec-Driven · NOVA Eclipse
+Ralph Wiggum Loop · v1.0 · Spec-Driven · Ralph Design System
