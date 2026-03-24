@@ -1,7 +1,7 @@
 # Ship-it-Ralph
 > A Skill for turning one sentence idea into a running full-stack app — spec, tasks, tests, and code generated automatically.
 
-> ## In 10 seconds
+## In 10 seconds
 /factory a subscription tracker
 → Working app at localhost:5173
 
