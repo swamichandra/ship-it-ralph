@@ -64,11 +64,11 @@ Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required 
 ---
 
 ## Why Ship-it-Ralph?
-**Spec-First** Most coding tools asks you to write or co-author the spec. Ship-it-Ralph produces it from your one-sentence idea. You do not need to know how to write a specification document to get a complete one. Ralph writes the spec from the user’s sentence If the spec is wrong, you catch it in Phase 4 before a single line of implementation is written. The quality of the output is determined by the quality of the spec — not the quality of your prompt. That distinction is the entire design.
+**Spec-First.** Most coding tools ask you to write or co-author the spec. Ralph produces it from your one-sentence idea — you never touch a spec document. If the spec is wrong, you catch it in Phase 4 before a single line of implementation is written. The quality of the output is determined by the quality of the spec, not the quality of your prompt. That distinction is the entire design.
 
 **Zero Install Portability.** Copy one folder. No CLI, no global npm package, no new IDE, no account. Works inside the tools you already use.
 
-**Test-Driven Autonomy** Ship-it-Ralph writes the tests in Phase 6. The build in Phase 7 isn't finished until the tests pass. The AI doesn't "grade its own homework. 
+**Test-Driven Autonomy** Ship-it-Ralph writes the tests in Phase 6. The build in Phase 7 isn't finished until the tests pass. The AI doesn't "grade its own homework". 
 
 ---
 
@@ -196,7 +196,7 @@ API tests require a running server. Run `npm run dev:server` before `npm test`.
 .github/
 ├── SKILL.md                 ← the factory
 └── references/
-    ├── DESIGN_SYSTEM.md     ← Ship-it-Ralph Design System — Eclipse Edition
+    ├── DESIGN_SYSTEM.md     ← Ralph Design System
     ├── STACK.md             ← Express, Vite, libsql, Vitest templates
     └── CONSTITUTION.md      ← constitution writing guide
 ```
