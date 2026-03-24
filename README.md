@@ -25,9 +25,10 @@ across nine autonomous phases — the core of which is the
 **Install**
 ```bash
 # 1. Install Ship-it-Ralph as an agent skill in your workspace
+# Copies one folder. Nothing installed globally.
 git clone https://github.com/swamichandra/ship-it-ralph
 cp -r ship-it-ralph/.github your-workspace/
-# Copies one folder. Nothing installed globally.
+
 # You should see `SKILL.md` and 3 reference files in `resources/` subfolder.
 ```
 
@@ -53,7 +54,6 @@ If you want to pause after the spec is written, perform a human-in-the-loop revi
 npm run install:all && npm run dev
 # Client → http://localhost:5173   API → http://localhost:3001
 ```
-
 ---
 
 ## The Deliverables
