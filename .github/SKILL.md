@@ -1,5 +1,5 @@
 ---
-name: software-factory
+name: ship-it-ralph
 author: Swami Chandrasekaran
 description: >
   Autonomous full-stack software factory. Spec-driven. Builds a working React + Node
