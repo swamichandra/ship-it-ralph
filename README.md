@@ -85,8 +85,9 @@ Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required 
 | 8 | Security | OWASP pass, auto-fixes, verdict: SHIP / SHIP WITH NOTES / DO NOT SHIP. |
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#F7F5F0', 'primaryBorderColor': '#E5503F'}}}%%
 flowchart TD
-    START([/factory · hey Ship-it-Ralph]) --> P0
+    START([/factory · 'idea']) --> P0
     STARTREVIEW([/factory --review]) --> P0
 
     P0[0 · Intake] --> P1
@@ -121,13 +122,6 @@ flowchart TD
     REDESIGN([/redesign]) --> P3
     RESPEC([/respec])     --> P1
     REBUILD([/rebuild])   --> P7A
-
-    style CONTRACT fill:#1a1a2e,stroke:#444,color:#ccc
-    style BUILD fill:#1a2e1a,stroke:#444,color:#ccc
-    style GATE fill:#2e1a1a,stroke:#888,color:#fff
-    style PAUSE fill:#2e2a1a,stroke:#888,color:#fff
-    style DONE fill:#1a2e1a,stroke:#4a4,color:#ccc
-    style CONTINUE stroke:#666,stroke-dasharray:4
 ```
 
 ---
