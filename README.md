@@ -1,10 +1,10 @@
 # Ship-it-Ralph
 > A Skill for turning one sentence idea into a running full-stack app — spec, tasks, tests, and code generated automatically.
 
-## In 10 seconds
-/factory a subscription tracker
+> ```/factory a subscription tracker```
 → Working app at localhost:5173
 
+## In 30 seconds
 Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md)** target for GitHub Copilot, Cursor, Claude Code, and Google 
 Antigravity that runs the entire loop *autonomously*.
 
