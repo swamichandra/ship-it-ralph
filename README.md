@@ -1,9 +1,12 @@
-# Ship-it-Ralph
-**A spec-driven AI Skill that turns one sentence idea into a working full-stack app.**
+# Ship it Ralph
+**A spec-driven AI Skill — one sentence in, tested full-stack app out.**
 
-Ship-it-Ralph is a **Skill** for GitHub Copilot, Cursor, Claude Code, and Google Antigravity that runs the entire loop *autonomously* — spec first. 
+Ship it Ralph is a **Skill** for GitHub Copilot, Cursor, Claude Code, and Google 
+Antigravity that runs the entire loop *autonomously*.
 
-It follows *[Spec-Driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)* and using as needed through the *[Ralph Wiggum Loop](https://ghuntley.com/ralph/)* (nine autonomous phases). It forces the AI to stop guessing. It won't touch a line of implementation until it has written the Spec, mapped the Tasks, and generated the Tests. Every file generated against a contract.
+It follows *[Spec-Driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)* 
+across nine autonomous phases — the core of which is the 
+*[Ralph Wiggum Loop](https://ghuntley.com/ralph/)*: spec, tasks, tests, then code. This forces the AI to write the spec, map the tasks, and generate the tests before touching a line of implementation. Every file generated against a contract.
 
 ![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 
