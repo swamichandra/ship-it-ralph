@@ -1,4 +1,4 @@
-# Ship it Ship-it-Ralph
+# Ship-it-Ralph
 **A spec-driven AI Skill that turns one sentence idea into a working full-stack app.**
 
 Ship-it-Ralph is a **Skill** for GitHub Copilot, Cursor, Claude Code, and Google Antigravity that runs the entire loop *autonomously* — spec first. 
@@ -48,18 +48,7 @@ npm run install:all && npm run dev
 ```
 
 ---
-## Repo
 
-```
-.github/
-├── SKILL.md                 ← the factory
-└── references/
-    ├── DESIGN_SYSTEM.md     ← Ship-it-Ralph Design System — Eclipse Edition
-    ├── STACK.md             ← Express, Vite, libsql, Vitest templates
-    └── CONSTITUTION.md      ← constitution writing guide
-```
-
----
 ## The Deliverables
 Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required (unless you run with the --review option). The following will get created:
 ```
@@ -198,10 +187,23 @@ API tests require a running server. Run `npm run dev:server` before `npm test`.
 
 ---
 
+## Repo
+
+```
+.github/
+├── SKILL.md                 ← the factory
+└── references/
+    ├── DESIGN_SYSTEM.md     ← Ship-it-Ralph Design System — Eclipse Edition
+    ├── STACK.md             ← Express, Vite, libsql, Vitest templates
+    └── CONSTITUTION.md      ← constitution writing guide
+```
+
+---
+
 PRs welcome. Test any change to `SKILL.md` against three different ideas before submitting.
 
 [Issues](https://github.com/swamichandra/ship-it-ralph/issues) · MIT License
 
 ---
 
-*Ship it Ship-it-Ralph · v1.0.0 · Swami Chandrasekaran*
+*Ship-it-Ralph · v1.0.0 · Swami Chandrasekaran*
