@@ -1,7 +1,7 @@
-# Ship it Ralph
+# Ship-it-Ralph
 **A spec-driven AI Skill — one sentence in, Ralph writes the spec, tested full-stack app out.**
 
-Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md)** for GitHub Copilot, Cursor, Claude Code, and Google 
+Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md){:target="_blank" rel="noopener"}** for GitHub Copilot, Cursor, Claude Code, and Google 
 Antigravity that runs the entire loop *autonomously*.
 
 It follows *[Spec-Driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)* 
