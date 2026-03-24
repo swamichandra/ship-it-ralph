@@ -1,7 +1,7 @@
 # Ship-it-Ralph
 > A Skill for turning one sentence idea into a running full-stack app — spec, tasks, tests, and code generated automatically.
 
-> ```/factory a subscription tracker```
+> ```/factory``` YOUR 1-sentence idea
 → Working app at localhost:5173
 
 ## In 30 seconds
@@ -206,6 +206,7 @@ API tests require a running server. Run `npm run dev:server` before `npm test`.
 ```
 
 ---
+Stop prompting AI to write code. Use the Slill, start specifying what you want built.
 
 PRs welcome. Test any change to `SKILL.md` against three different ideas before submitting.
 
