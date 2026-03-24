@@ -48,7 +48,18 @@ npm run install:all && npm run dev
 ```
 
 ---
+## Repo
 
+```
+.github/
+├── SKILL.md                 ← the factory
+└── references/
+    ├── DESIGN_SYSTEM.md     ← Ship-it-Ralph Design System — Eclipse Edition
+    ├── STACK.md             ← Express, Vite, libsql, Vitest templates
+    └── CONSTITUTION.md      ← constitution writing guide
+```
+
+---
 ## The Deliverables
 Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required (unless you run with the --review option). The following will get created:
 ```
@@ -186,17 +197,6 @@ Ship-it-Ralph is a factory for MVPs. It does **not** natively generate:
 API tests require a running server. Run `npm run dev:server` before `npm test`.
 
 ---
-
-## Repo
-
-```
-.github/
-├── SKILL.md                 ← the factory
-└── references/
-    ├── DESIGN_SYSTEM.md     ← Ship-it-Ralph Design System — Eclipse Edition
-    ├── STACK.md             ← Express, Vite, libsql, Vitest templates
-    └── CONSTITUTION.md      ← constitution writing guide
-```
 
 PRs welcome. Test any change to `SKILL.md` against three different ideas before submitting.
 
