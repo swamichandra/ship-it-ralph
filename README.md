@@ -5,8 +5,7 @@
 → Working app at localhost:5173
 
 ## In 30 seconds
-Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md)** target for GitHub Copilot, Cursor, Claude Code, and Google 
-Antigravity that runs the entire loop *autonomously*.
+Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md)** target for [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/) that runs the entire loop *autonomously*.
 
 It follows *[Spec-Driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)* 
 across nine autonomous phases — the core of which is the 
