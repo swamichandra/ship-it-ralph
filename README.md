@@ -10,6 +10,7 @@ Runs the **Ralph Wiggum Loop** autonomously — spec first, tasks, tests before 
 
 Works with: [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/)
 
+![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 ---
 
 ## Contents
