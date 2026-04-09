@@ -1,190 +1,231 @@
-# Ship-it-Ralph
-> A Skill for turning one sentence idea into a running full-stack app — spec, tasks, tests, and code generated automatically.
+# Ship it Ship-it-Ralph
 
-> ```/factory``` YOUR 1-sentence idea
-→ Working app at localhost:5173
+> A spec-driven AI Skill that turns a one-line idea into a working full-stack app.
 
-## In 30 seconds
-Ship-it-Ralph is a **[Skill](https://github.com/swamichandra/ship-it-ralph/blob/main/.github/SKILL.md)** target for [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/) that runs the entire loop *autonomously*.
-
-It follows *[Spec-Driven Development](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html)* 
-across nine autonomous phases — the core of which is the 
-*[Ralph Wiggum Loop](https://ghuntley.com/ralph/)*: spec, tasks, tests, then code. This forces the AI to write the spec, map the tasks, and generate the tests before touching a line of implementation. Every file generated against a contract.
-
-![Ship-it-Ralph](logo.png "Ship-it-Ralph")
-
----
-## What's in the box
-
-| File | Purpose |
-|---|---|
-| `SKILL.md` | The Ralph Wiggum inspired sepc-driven dev factory. One file. Drives the entire autonomous build loop. |
-| `DESIGN_SYSTEM.md` | The visual contract. Every component, and pattern the generated UI must follow. Change as needed.|
-| `STACK.md` | The engineering contract. File templates for Express, Vite, libsql, and Vitest. |
-| `CONSTITUTION.md` | The project contract. Immutable rules every future agent and developer must follow. |
-
----
-
-## ⚡️Quick start
-*Ship-it-Ralph is purpose-built for one thing: a developer with an idea who wants a running, specced, tested full-stack app in one autonomous session.*
-
-**Prerequisites**
-[Node.js 22](https://nodejs.org), [npm](https://www.npmjs.com/) and one of: GitHub Copilot (VS Code), Cursor, Claude Code, or Google Antigravity in agent mode.
-
-**Install**
-```bash
-# 1. Install Ship-it-Ralph as an agent skill in your workspace
-# Copies one folder. Nothing installed globally.
-git clone https://github.com/swamichandra/ship-it-ralph
-cp -r ship-it-ralph/.github your-workspace/
-
-# You should see `SKILL.md` and 3 reference files in `resources/` subfolder.
+```
+/factory YOUR 1-SENTENCE IDEA  →  working app at localhost:5173
 ```
 
-**Trigger the Factory**
+Runs the **Ralph Wiggum Loop** autonomously — spec first, tasks, tests before code, server, client, security pass. Nothing builds against the prompt alone; everything traces to `spec/spec.md` and `spec/tasks.md`.
+
+Works with: [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/)
+
+---
+
+## Contents
+
+- [Quick start](#-quick-start)
+- [What gets created](#what-gets-created)
+- [The nine phases](#the-nine-phases)
+- [Commands & controls](#commands--controls)
+- [Run modes](#run-modes)
+- [After the build](#after-the-build)
+- [Example ideas](#example-ideas)
+- [Limitations](#limitations)
+- [Repo layout](#repo-layout)
+- [Docs & advanced options](#docs--advanced-options)
+
+---
+
+## ⚡ Quick start
+
+**Prerequisites:** Node.js 22, npm, and an agent-capable IDE.
+
+### 1. Install
+
+Copy the bundle into your workspace. No npm install.
+
 ```bash
-# 2.  Open your Agent chat (Cursor, Copilot, or Claude Code) and type:
+# 1. Clone it
+git clone https://github.com/swamichandra/ship-it-ralph
+cd ship-it-ralph
+
+# Set to your project's root folder
+WORKSPACE=/path/to/your-workspace
+
+# 2. Install to your project 
+mkdir -p "$WORKSPACE/.agents/ship-it-ralph"
+cp -r . "$WORKSPACE/.agents/ship-it-ralph/"
+rm -rf "$WORKSPACE/.agents/ship-it-ralph/.git"
+```
+
+> **Also works under `.github/`** (e.g. GitHub Copilot). Same files, same layout.
+
+### 2. Run
+
+```text
 /factory a subscription tracker that warns before renewals
 ```
 
-- Phases 0–4 will write spec.md, tasks.md, and tests — before any code is written.
-- Phases 7A–7B will build the server and client code against the spec.
-- No follow-up questions. Run autonomously
+### 3. Review spec before building (optional)
 
-**Optionally:**
-If you want to pause after the spec is written, perform a human-in-the-loop review and edit it before building, run with the ```--review``` flag. Ship-it-Ralph pauses after spec.md is written. Make edits. Then type `/approve` to continue.
-```
+```text
 /factory --review a subscription tracker that warns before renewals
+# edit spec/spec.md if needed, then:
+/approve
 ```
 
-**Run the app**
+### 4. Run the generated app
+
 ```bash
-# 3. Start the app
 npm run install:all && npm run dev
-# Client → http://localhost:5173   API → http://localhost:3001
 ```
----
 
-## The Deliverables
-Ship-it-Ralph executes a 9-phase autonomous loop. No follow-up prompts required (unless you run with the --review option). The following will get created:
-```
-  spec.md         Source of truth — entities, routes, screens
-  tasks.md        Build plan — 15 atomic tasks derived from the spec
-  tests/          Definition of done. Vitest specs written before server exists
-  server/         Express API, SQLite, 5 CRUD routes per entity
-  client/         React + Vite + Tailwind, dark/light mode, charts
-```
----
+- Client → `http://localhost:5173`
+- API → `http://localhost:3001`
+- Tests → `npm run dev:server` then `npm test`
 
-## Why Ship-it-Ralph?
-**Spec-First.** Most coding tools ask you to write or co-author the spec. Ralph produces it from your one-sentence idea — you never touch a spec document. If the spec is wrong, you catch it in Phase 4 before a single line of implementation is written. The quality of the output is determined by the quality of the spec, not the quality of your prompt. That distinction is the entire design.
-
-**Zero Install Portability.** Copy one folder. No CLI, no global npm package, no new IDE, no account. Works inside the tools you already use.
-
-**Test-Driven Autonomy** Ship-it-Ralph writes the tests in Phase 6. The build in Phase 7 isn't finished until the tests pass. The AI doesn't "grade its own homework". 
+> **Where the app lands:** `../ralph-apps/[prefix]-[slug]` (sibling of your project). If your environment blocks writes above workspace root, edit `RUN BOOTSTRAP → Location rule` in your installed `SKILL.md` and change `../ralph-apps/` to `./ralph-apps/`.
 
 ---
 
-## How it works: The 9-Phases
+## What gets created
+
+| Output | Purpose |
+|--------|---------|
+| `spec/spec.md` | Contract — entities, routes, screens, stack |
+| `spec/tasks.md` | Atomic build tasks (server first, then client) |
+| `tests/` | Vitest specs written before the server exists |
+| `server/` | Express + SQLite (libsql) + CRUD routes |
+| `client/` | React + Vite + Tailwind + Ralph Design System |
+| `constitution.md` | Project rules — first artifact written in Phase 7A |
+
+---
+
+## The nine phases
 
 | # | Phase | What it does |
-|---|---|---|
-| 0 | Intake | Restates your idea in plain English. Catches vague specs before they become bad code. |
-| 1 | PM | Locks the product name, jobs-to-be-done, and five MVP features. Nothing more. |
-| 2 | Architect | Decides the stack, data entities, and every API route. |
-| 3 | Design | Defines the screens, their slugs, and the visual system. |
-| 4 | Spec | Writes `spec.md` — the source of truth. Everything downstream builds against this. |
-| 5 | Tasks | Breaks the spec into 12–18 atomic tasks. One task = one file or one behavior. |
-| 6 | Tests | Writes Vitest specs from the task list — before the server exists. They will fail. That is correct. |
-| 7A | Server | Builds Express, SQLite, routes. Confirms the server starts before touching the client. |
-| 7B | Client | Builds React, Vite, Tailwind, all screens. Against the spec, not the original prompt. |
-| 8 | Security | OWASP pass, auto-fixes, verdict: SHIP / SHIP WITH NOTES / DO NOT SHIP. |
+|---|-------|--------------|
+| 0 | Intake | Plain-English restatement; sets `FACTORY_MODE` |
+| 1 | PM | Product name, jobs-to-be-done, MVP scope |
+| 2 | Architect | Stack, entities, routes |
+| 3 | Design | Screens, slugs, Ralph Design System |
+| 4 | Spec | Writes `spec/spec.md` |
+| 5 | Tasks | Writes `spec/tasks.md` |
+| 6 | Tests | Vitest specs before any server code |
+| 7A | Server | Express + SQLite; health check required before 7B |
+| 7B | Client | React + Vite + Tailwind; mutation flows required — no read-only dashboards |
+| 8 | Security | Findings, auto-fixes, SHIP / SHIP_WITH_NOTES / DO_NOT_SHIP |
+
+The diagram shows how partial commands re-enter the flow.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#F7F5F0', 'primaryBorderColor': '#E5503F'}}}%%
 flowchart TD
-    START([/factory · 'idea']) --> P0
+    START([/factory]) --> P0
     STARTREVIEW([/factory --review]) --> P0
+    FROM_SPEC([/from-spec]) --> P5
 
     P0[0 · Intake] --> P1
     P1[1 · PM] --> P2
     P2[2 · Architect] --> P3
     P3[3 · Design] --> P4
 
-    subgraph CONTRACT [" Spec contract — written before any code "]
-        P4[4 · Spec\nspec.md] --> REVIEWGATE{--review\nflag?}
+    subgraph CONTRACT [" Spec before code "]
+        P4[4 · Spec\nspec/spec.md] --> REVIEWGATE{--review?}
         REVIEWGATE -->|no| P5
-        REVIEWGATE -->|yes| PAUSE([Pause — spec.md ready\nUser reads and edits])
+        REVIEWGATE -->|yes| PAUSE([Pause · edit spec/spec.md])
         PAUSE -->|/approve| P5
-        P5[5 · Tasks\ntasks.md] --> P6
-        P6[6 · Tests\nVitest specs]
+        P5[5 · Tasks\nspec/tasks.md] --> P6
+        P6[6 · Tests]
     end
 
     P6 --> P7A
 
     subgraph BUILD [" Build "]
-        P7A[7A · Server\nExpress + SQLite] --> GATE{Health\ncheck}
+        P7A[7A · Server] --> GATE{Health check}
         GATE -->|pass| P7B
-        GATE -->|fail · fix and retry| P7A
-        P7B[7B · Client\nReact + Vite]
+        GATE -->|fix| P7A
+        P7B[7B · Client] --> INTGATE{Interaction check}
+        INTGATE -->|pass| P8
+        INTGATE -->|read-only detected| TRIPWIRE([TRIPWIRE · self-correct])
+        TRIPWIRE --> P7B
     end
 
-    P7B --> P8[8 · Security\nOWASP pass]
-    P8 --> DONE([Complete])
+    P8[8 · Security] --> DONE([Complete])
 
-    CONTINUE([/continue]) -.->|resume after truncation| BUILD
-
-    RETASK([/retask])     --> P5
+    CONTINUE([/continue]) -.->|after truncation| BUILD
+    TESTS_CMD([/tests]) --> P6
+    SEC_CMD([/security]) --> P8
+    RETASK([/retask]) --> P5
     REDESIGN([/redesign]) --> P3
-    RESPEC([/respec])     --> P1
-    REBUILD([/rebuild])   --> P7A
+    RESPEC([/respec]) --> P1
+    REBUILD([/rebuild]) --> P7A
+
+    style CONTRACT fill:#1a1a2e,stroke:#444,color:#ccc
+    style BUILD fill:#1a2e1a,stroke:#444,color:#ccc
+    style GATE fill:#2e1a1a,stroke:#888,color:#fff
+    style PAUSE fill:#2e2a1a,stroke:#888,color:#fff
+    style DONE fill:#1a2e1a,stroke:#4a4,color:#ccc
+    style CONTINUE stroke:#666,stroke-dasharray:4
 ```
 
 ---
 
-##  Commands & Controls
+## Commands & controls
 
-| Trigger | Reruns | Use when |
-|---|---|---|
-| `/factory` | Phases 0–8 | Run fully autonomously, no human-the-loop|
-| `--review` + `/approve` | Phases 0–4, pause, then 5–8 | Review spec before building |
-| `/redesign` | Phase 3 + 7B | Server works, want different layout or screens |
-| `/respec` | Phases 1–5 | Expanding scope — no code touched |
-| `/rebuild` | Phases 7A + 7B + 8 | Last build truncated or spec was edited |
-| `/retask` | Phase 5 | Edited `spec.md` manually, need `tasks.md` to match |
+| Trigger | Phases | Use when |
+|---------|--------|----------|
+| `/factory` | 0–8 | Greenfield idea → full app |
+| `/factory --review` | 0–4 pause, then `/approve` → 5–8 | Edit `spec/spec.md` before build |
+| `/approve` | 5–8 | Continue after `--review` pause |
+| `/from-spec` | 5–8 | You already have `spec/spec.md` |
+| `/continue` | Resume 7A or 7B | After "Ralph got sleepy" truncation |
+| `/rebuild` | 7A, 7B, 8 | Clean rebuild from current spec + tasks |
+| `/respec` | 1–5 | New scope — rewrites spec + tasks, no code |
+| `/redesign` | 3, 7B | Server OK; new UI only |
+| `/retask` | 5 | Refresh `spec/tasks.md` after spec edits |
+| `/tests` | 6 | Regenerate tests only |
+| `/security` | 8 | Re-audit after manual edits |
+
+> `/approve` requires a prior `--review` pause. On a bare `spec/spec.md` without one, use `/from-spec` instead.
+
+Full prerequisite list and emit strings: [`SKILL.md`](SKILL.md) → COMMAND MAP.
+
+---
+
+## Run modes
+
+| Mode | Flag | What changes |
+|------|------|--------------|
+| **fast** | `--fast` | Fewer features, entities, screens, seed rows |
+| **normal** | default | Standard behavior |
+| **advanced** | `--advanced` | Adds Assumptions + Risks to spec, richer security findings, honest `npm test` evidence |
+
+All modes run all nine phases. Phase 6 and Phase 8 are never skipped.
+
+```text
+/factory --fast a tiny two-screen app
+/factory --advanced --review an app you'll harden before shipping
+/from-spec --advanced
+```
 
 ---
 
 ## After the build
 
-Read `spec.md` before touching anything. It documents what was built and why.
+Read `spec/spec.md` first — it's the contract for what was built.
 
-| File | Why |
-|---|---|
-| `server/db/seed.js` | Replace demo records with data from your real domain |
-| `client/src/pages/` | Edit labels, fields, and layout per screen |
-| `server/db/schema.js` | Change `':memory:'` to `'file:local.db'` for persistence |
-| `constitution.md` | Amend before adding a developer or running the factory again |
+| File | Next step |
+|------|-----------|
+| `server/db/seed.js` | Replace demo data |
+| `server/db/schema.js` | Switch in-memory → file DB for persistence |
+| `client/src/pages/` | Tweak labels and layout |
+| `constitution.md` | Amend before onboarding other developers |
 
 ---
 
-## A few one line ideas that you can try
+## Example ideas
 
-```
+```text
 /factory a subscription tracker that warns before renewals
 /factory a hiring pipeline tracker for a recruiting team
 /factory a restaurant menu and order management system
 /factory a reading list tracker with notes and ratings
-/factory a demand forecasting dashboard for retail buyers
 /factory a pet care log for a veterinary clinic
 /factory an equipment maintenance tracker for a facilities team
-/factory a recipe manager with ingredient inventory
 /factory a conference talk submission and review tool
 /factory a freelancer invoice and payment tracker
-/factory a neighborhood watch incident log
-/factory a book club reading schedule with discussion notes
 /factory a gym class booking system for a small studio
-/factory an API key and credential inventory for a dev team
 /factory a plant watering tracker with care instructions
 ```
 
@@ -192,35 +233,49 @@ Read `spec.md` before touching anything. It documents what was built and why.
 
 ## Limitations
 
-Ship-it-Ralph is a factory for MVPs. It does **not** natively generate:
-- OAuth/Auth providers (Auth is none by default)
-- Stripe/Payment gateways
+Ship-it-Ralph targets MVPs. These are not generated by default:
+
+- OAuth / full auth (auth is `none`)
+- Stripe or payment providers
 - File uploads or WebSockets
-- Ship-it-Ralph will mark these as [DEFERRED] in the code with TODO instructions for manual setup.
-- Maximum three per run — larger ideas should be split across two factory runs.
 
-API tests require a running server. Run `npm run dev:server` before `npm test`.
+Each is marked `[RALPH DEFERRED]` with a TODO. Max three per run — a fourth triggers a scope-split recommendation.
 
 ---
 
-## Repo
+## Repo layout
 
 ```
+SKILL.md                    ← authoritative policy (phases, commands, verification)
+references/
+├── DESIGN_SYSTEM.md
+├── STACK.md
+└── CONSTITUTION.md
+orchestrator/               ← optional hybrid context layer
+docs/
+├── USER_GUIDE.md
+├── ORCHESTRATOR_GUIDE.md
+└── ARCHITECTURE.md
+assets/  scripts/  evals/   ← optional
 .github/
-├── SKILL.md                 ← the factory
-└── references/
-    ├── DESIGN_SYSTEM.md     ← Ralph Design System
-    ├── STACK.md             ← Express, Vite, libsql, Vitest templates
-    └── CONSTITUTION.md      ← constitution writing guide
+└── README.md               ← install note for .github/ layout
 ```
 
 ---
-Stop prompting AI to write code. Use the Slill, start specifying what you want built.
 
-PRs welcome. Test any change to `SKILL.md` against three different ideas before submitting.
+## Docs & advanced options
+
+| Need | Where to look |
+|------|--------------|
+| Step-by-step walkthroughs | [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) |
+| Lower token usage on long runs | [`docs/ORCHESTRATOR_GUIDE.md`](docs/ORCHESTRATOR_GUIDE.md) |
+| Authority and layering model | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| Full phase contracts and verification rules | [`SKILL.md`](SKILL.md) |
+
+PRs welcome. Test changes to `SKILL.md` against multiple ideas before submitting.
 
 [Issues](https://github.com/swamichandra/ship-it-ralph/issues) · MIT License
 
 ---
 
-*Ship-it-Ralph · v1.0.0 · Swami Chandrasekaran*
+*Ship-it-Ralph · Swami Chandrasekaran*
