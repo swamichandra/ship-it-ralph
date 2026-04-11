@@ -144,7 +144,7 @@ Use these when you already have artifacts and only need part of the loop.
 | `/tests` | `spec/spec.md`, `spec/tasks.md` | Regenerates Vitest files only. |
 | `/rebuild` | `spec/spec.md`, `spec/tasks.md` | Rebuilds server + client + security pass. |
 | `/respec` | New idea in the message | Phases 1–5: new `spec/spec.md` and `spec/tasks.md`, **no** code changes until you `/rebuild` or `/from-spec`. |
-| `/redesign` | Working server, `spec/spec.md`, `constitution.md` | New design + client only (phases 3 and 7B). |
+| `/redesign` | Working server, `spec/spec.md`, `constitution.md` | Phases 3 and 7B: new design, client rewrite; updates `spec/spec.md` **## Screens** and **## Design** only (see `SKILL.md`). |
 | `/security` | Code + `spec/spec.md` + `constitution.md` | Phase 8 only. |
 | `/continue` | `spec/tasks.md` + prior “Ralph got sleepy” message | Resume truncated 7A or 7B. |
 

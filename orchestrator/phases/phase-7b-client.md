@@ -6,6 +6,7 @@ Context:
 - `spec/spec.md` and `spec/tasks.md` (full files)
 - client sections of `references/STACK.md`
 - component/usage sections of `references/DESIGN_SYSTEM.md`
+- `references/ANTI_GENERIC_UI.md` (composition; implement Phase 3 LAYOUT_SPEC / WEIRD_HOOK / per-screen ideas)
 
 Precondition: server health check is confirmed.
 Write client files as separate file actions in task order.

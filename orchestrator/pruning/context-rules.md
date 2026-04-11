@@ -49,6 +49,7 @@ Reference sections:
   - Palette and tokens
   - Component catalog
   - Icon guidance
+- `references/ANTI_GENERIC_UI.md` (full — layout/metaphor contract)
 
 Ignore:
 - Server templates and constitution details
@@ -118,6 +119,7 @@ Load:
 
 Reference sections:
 - `references/DESIGN_SYSTEM.md` (component/usage sections)
+- `references/ANTI_GENERIC_UI.md` (composition — implement Phase 3 contract in layout)
 - `references/STACK.md` (client sections only)
 
 Ignore:

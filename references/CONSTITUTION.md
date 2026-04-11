@@ -35,7 +35,7 @@ code failures in this specific project. Examples:
 - Date range expectations
 
 **Design principles**: The non-negotiable UI rules from Phase 3.
-- Which design system is in use (NOVA Eclipse)
+- Which design system is in use (Ralph Eclipse + `references/ANTI_GENERIC_UI.md` for layout/metaphor)
 - Dark mode default
 - Responsive breakpoint
 - Empty states required on which screens
@@ -91,7 +91,7 @@ No additional dependencies without explicit approval.
 - Dates: ISO 8601 strings. Span at least 12 months in seed data.
 
 ## Design Principles
-- NOVA Eclipse design system. Read DESIGN_SYSTEM.md before writing UI.
+- Ralph Eclipse design system and Anti-Generic UI contract. Read DESIGN_SYSTEM.md and ANTI_GENERIC_UI.md before writing UI.
 - Dark mode default. ModeToggle always present in nav.
 - Every data screen has an empty state component.
 - Every list has a live search filter.

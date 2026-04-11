@@ -4,9 +4,12 @@
 A premium interface system with editorial typography, restrained glass surfaces, and a clear
 hierarchy of neutral surfaces, coral focal accents, and cyan data accents.
 
+**Composition (layout, metaphor, anti-template):** Use **`references/ANTI_GENERIC_UI.md`** alongside this file. It governs screen concept, explicit layout, asymmetry, and bans lazy “default SaaS” shells. On conflicts about **structure or patterns**, that file wins. This file remains authoritative for **CSS variables, type scale, listed JSX components, Usage Principles, and §9 AI-native primitives** — still apply those unless Anti-Generic explicitly overrides.
+
 ---
 
 ## Table of Contents
+0. Scope — this file vs Anti-Generic UI
 1. Eclipse Palette (CSS vars — dark + light)
 2. Base Reset + Body
 3. Type, Spacing, Surface, and Motion Tokens
@@ -16,6 +19,21 @@ hierarchy of neutral surfaces, coral focal accents, and cyan data accents.
 7. Components (JSX)
 8. ModeToggle
 9. AI-Native Patterns
+
+---
+
+## 0. Scope — this file vs Anti-Generic UI
+
+| Concern | Source |
+| -------- | ------ |
+| Palette, radii, shadows, type tokens, body background, glass tokens | This file (§§1–3) |
+| Component snippets (Button, Card, ModeToggle, etc.) | This file (§§7–8) |
+| AI loading / optimistic / streaming UX | This file §9 |
+| **Screen metaphor, bespoke layout, avoiding card-grid dashboards, “signature moment,” implementable weird hook** | **`ANTI_GENERIC_UI.md`** |
+
+Do not “design in the tokenizer” as a neat card stack: **compose** with a clear `LAYOUT_SPEC` and tension from Anti-Generic, then **skin** with Eclipse tokens and primitives here.
+
+**Factory / Ship-it-Ralph warning:** Models often ship **light gray page + white `rounded-2xl shadow` cards** (Tailwind defaults) for dashboards. That is **explicitly out of contract** unless Phase 3 justified it with full Anti-Generic blocks. **Default app theme is `data-theme="dark"`** with the **§2 body** background — use **`var(--bg)`**, **`var(--surface)`**, **`var(--text)`**, not `bg-gray-50` + `bg-white` as the primary shell.
 
 ---
 
@@ -855,6 +873,9 @@ export function TypingIndicator() {
 ---
 
 ## Usage Principles
+
+### Composition (with Anti-Generic UI)
+- Read **`references/ANTI_GENERIC_UI.md`** when shaping pages: explicit regions, screen `idea:`, signature moment, and a implementable `WEIRD_HOOK`. Tokens and components below stay Eclipse unless that doc targets structure only.
 
 ### Accent usage
 - Use coral for primary CTA, active nav, selected states, and key KPI emphasis.

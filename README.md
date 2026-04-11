@@ -1,4 +1,4 @@
-# Ship it Ship-it-Ralph
+# Ship-it-Ralph
 
 > A spec-driven AI Skill that turns a one-line idea into a working full-stack app.
 
@@ -10,7 +10,6 @@ Runs the **Ralph Wiggum Loop** autonomously — spec first, tasks, tests before 
 
 Works with: [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/)
 
-![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 ---
 
 ## Contents
@@ -84,11 +83,11 @@ npm run install:all && npm run dev
 
 | Output | Purpose |
 |--------|---------|
-| `spec/spec.md` | Contract — entities, routes, screens, stack |
+| `spec/spec.md` | Contract — entities, routes, screens, stack, **## Design** (palette + anti-generic summary after Phase 3) |
 | `spec/tasks.md` | Atomic build tasks (server first, then client) |
 | `tests/` | Vitest specs written before the server exists |
 | `server/` | Express + SQLite (libsql) + CRUD routes |
-| `client/` | React + Vite + Tailwind + Ralph Design System |
+| `client/` | React + Vite + Tailwind + Ralph Design System (tokens/components) and Anti-Generic composition from Phase 3 / `spec/spec.md` **## Design** |
 | `constitution.md` | Project rules — first artifact written in Phase 7A |
 
 ---
@@ -100,7 +99,7 @@ npm run install:all && npm run dev
 | 0 | Intake | Plain-English restatement; sets `FACTORY_MODE` |
 | 1 | PM | Product name, jobs-to-be-done, MVP scope |
 | 2 | Architect | Stack, entities, routes |
-| 3 | Design | Screens, slugs, Ralph Design System |
+| 3 | Design | Screens, slugs, Ralph Design System + [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) (layout, metaphor, tripwires) |
 | 4 | Spec | Writes `spec/spec.md` |
 | 5 | Tasks | Writes `spec/tasks.md` |
 | 6 | Tests | Vitest specs before any server code |
@@ -173,7 +172,7 @@ flowchart TD
 | `/continue` | Resume 7A or 7B | After "Ralph got sleepy" truncation |
 | `/rebuild` | 7A, 7B, 8 | Clean rebuild from current spec + tasks |
 | `/respec` | 1–5 | New scope — rewrites spec + tasks, no code |
-| `/redesign` | 3, 7B | Server OK; new UI only |
+| `/redesign` | 3, 7B | Server OK; new UI — updates `spec/spec.md` **## Screens** and **## Design** to match Phase 3 |
 | `/retask` | 5 | Refresh `spec/tasks.md` after spec edits |
 | `/tests` | 6 | Regenerate tests only |
 | `/security` | 8 | Re-audit after manual edits |
@@ -249,7 +248,8 @@ Each is marked `[RALPH DEFERRED]` with a TODO. Max three per run — a fourth tr
 ```
 SKILL.md                    ← authoritative policy (phases, commands, verification)
 references/
-├── DESIGN_SYSTEM.md
+├── DESIGN_SYSTEM.md        ← Eclipse palette, components, §9 AI-native patterns
+├── ANTI_GENERIC_UI.md      ← layout / metaphor contract (overrides generic structure)
 ├── STACK.md
 └── CONSTITUTION.md
 orchestrator/               ← optional hybrid context layer
@@ -262,6 +262,8 @@ assets/  scripts/  evals/   ← optional
 └── README.md               ← install note for .github/ layout
 ```
 
+**Anti-generic UI:** Copy the whole **`references/`** folder with **`SKILL.md`** (including **`ANTI_GENERIC_UI.md`**). The skill text orders a disk read before Phase 3 and 7B, but your IDE only applies that if this factory skill is actually loaded for the session. If builds still look like a default analytics template, start the prompt with **`@`-references** to [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) and [`references/DESIGN_SYSTEM.md`](references/DESIGN_SYSTEM.md), or run **`/redesign`** after a full build so Phase 3 + 7B re-execute with those files in context.
+
 ---
 
 ## Docs & advanced options
@@ -272,6 +274,8 @@ assets/  scripts/  evals/   ← optional
 | Lower token usage on long runs | [`docs/ORCHESTRATOR_GUIDE.md`](docs/ORCHESTRATOR_GUIDE.md) |
 | Authority and layering model | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 | Full phase contracts and verification rules | [`SKILL.md`](SKILL.md) |
+| UI tokens, components, Eclipse palette | [`references/DESIGN_SYSTEM.md`](references/DESIGN_SYSTEM.md) |
+| Anti-template layout, `LAYOUT_SPEC`, tripwires | [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) |
 
 PRs welcome. Test changes to `SKILL.md` against multiple ideas before submitting.
 

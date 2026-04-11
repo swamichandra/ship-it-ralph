@@ -4,7 +4,9 @@ author: Swami Chandrasekaran
 description: >
   Autonomous full-stack software factory. Spec-driven. Builds a working React + Node
   app from a single idea — constitution file, persistent spec, task breakdown, tests
-  before code, REST API, seed data, and polished UI.
+  before code, REST API, seed data, and polished UI. Enforces Anti-Generic UI
+  (references/ANTI_GENERIC_UI.md): no default analytics card-dashboard shells;
+  Eclipse tokens + bespoke layout from Phase 3.
   Trigger on: /factory (--review, --mode fast|normal|advanced, --fast, --advanced),
   /from-spec, /tests, /security, /rebuild, /retask, /respec, /redesign, /approve,
   /continue, hey Ralph, build me an app, scaffold this, factory mode.
@@ -31,6 +33,17 @@ After this banner, run all phases immediately. No other preamble. No clarifying 
 
 Phase sequence:
 0 Intake → 1 PM → 2 Architect → 3 Design → 4 Spec → 5 Tasks → 6 Tests → 7A Server → 7B Client → 8 Security
+
+## UI CONTRACT — ANTI-GENERIC (HARD)
+
+Models **default** to a “safe” shell: light gray canvas, white rounded shadow cards, KPI row + Recharts — **that output fails this skill** unless Phase 3 **explicitly** justified the same structure with `VISUAL_TENSION`, `WEIRD_HOOK`, and a non-template `LAYOUT_SPEC` (rare).
+
+1. **Files must be read, not assumed.** Before emitting the Phase 3 block **or** writing **any** Phase 7B client file, load **`references/ANTI_GENERIC_UI.md`** and **`references/DESIGN_SYSTEM.md`** from the same folder as this `SKILL.md` (tool read or @-path). Guessing tokens from memory **does not** satisfy the contract.
+2. **Phase 3 gate:** If `DESIGN_INTENT`, `LAYOUT_SPEC`, `INSPIRATION` (3), `WEIRD_HOOK`, `SIGNATURE_MOMENT`, and per-screen `idea:` are missing — **rewrite Phase 3** before Phase 4.
+3. **Phase 7B gate:** The visible shell must implement Phase 3’s `LAYOUT_SPEC` and `WEIRD_HOOK`. **Do not** paste component demos as the whole product layout.
+4. **Theme default:** **`data-theme="dark"`** before first paint (`main.jsx` + Eclipse body from DESIGN_SYSTEM §2). The factory **does not** ship a light-gray page + white card grid as the **default** experience. Light mode exists only via **ModeToggle**.
+
+**Rejected shell (tripwire — rework if matched):** pale `#f5f5f5`-style workspace; main area = **even grid** of similar white cards with large radius + soft shadow; optional dark **left nav**; content = KPI mini-cards + chart cards only; Instrument Serif / display type unused; no asymmetric region, no overlap, no `WEIRD_HOOK`. This matches generic “usage / tokenomics / analytics” templates.
 
 ## INSTALL LOCATION & PATH CONTRACT
 
@@ -80,8 +93,9 @@ Recommended target structure inside each generated app:
 
 Default context loading (when not using a pruned context-layer orchestrator):
 
-- Before Phase 3: read references/DESIGN_SYSTEM.md
+- Before Phase 3: read references/DESIGN_SYSTEM.md and references/ANTI_GENERIC_UI.md
 - Before Phase 7A: read references/STACK.md and references/CONSTITUTION.md
+- Before Phase 7B: re-read references/DESIGN_SYSTEM.md and references/ANTI_GENERIC_UI.md (composition + tokens)
 
 ---
 
@@ -105,7 +119,7 @@ Precedence order:
 
 1. This `SKILL.md` file (canonical policy and contracts — wherever it is installed)
 2. Context-layer orchestration docs (loading/pruning/memory mechanics)
-3. Reference files next to this file (`references/DESIGN_SYSTEM.md`, `references/STACK.md`, `references/CONSTITUTION.md`)
+3. Reference files next to this file (`references/DESIGN_SYSTEM.md`, `references/ANTI_GENERIC_UI.md`, `references/STACK.md`, `references/CONSTITUTION.md`)
 
 Non-negotiable in all modes (including pruned mode):
 
@@ -113,7 +127,7 @@ Non-negotiable in all modes (including pruned mode):
 - Never skip Phase 6 or Phase 8.
 - Keep all trigger semantics from COMMAND MAP and PHASE TRIGGERS.
 - Preserve all verification gates and evidence-before-completion behavior.
-- Reading `references/STACK.md` before Phase 7A and `references/DESIGN_SYSTEM.md` before Phase 7B is mandatory.
+- Reading `references/STACK.md` before Phase 7A is mandatory. Reading `references/DESIGN_SYSTEM.md` and `references/ANTI_GENERIC_UI.md` before Phase 7B is mandatory (Phase 3 must already satisfy Anti-Generic; 7B implements both).
 
 ---
 
@@ -176,11 +190,11 @@ Partial runs: read every **Needs** file first. Do not invent scope; derive from 
 
 | Milestone      | Evidence before leaving                                                             |
 | -------------- | ----------------------------------------------------------------------------------- |
-| After Phase 4  | `spec/spec.md` exists on disk; sections match Phases 1–3                             |
+| After Phase 4  | `spec/spec.md` exists on disk; sections match Phases 1–3 (including **## Design** with palette, layout, and anti-generic summary when Phase 3 emitted those blocks) |
 | After Phase 5  | `spec/tasks.md` exists; task count matches scope formula; server block before client block |
 | After Phase 6  | tests/api.test.js and tests/seed.test.js on disk; entities/routes match spec        |
 | After Phase 7A | `npm run dev:server` + GET /api/health → `{ "status": "ok" }`                       |
-| After Phase 7B | Client files complete per `spec/tasks.md`; no hardcoded hex; at least one entity has full UI CRUD wired; mutation flows expose loading/success/error states |
+| After Phase 7B | Client files complete per `spec/tasks.md`; no hardcoded hex; at least one entity has full UI CRUD wired; mutation flows expose loading/success/error states; **dark default** + shell not matching **Rejected shell** / **UI CONTRACT — ANTI-GENERIC** |
 | After Phase 8  | Verdict line present: SHIP | SHIP_WITH_NOTES | DO_NOT_SHIP                          |
 
 **Interaction minimum (non-negotiable)**
@@ -190,6 +204,7 @@ Partial runs: read every **Needs** file first. Do not invent scope; derive from 
 - UI must expose loading, success, and error feedback states for at least one mutation flow.
 - When Phase 0 **`AI_NATIVE: YES`**, the app must **not** be “metrics + tables only.” The user must **see** the AI value: at least **two** distinct UI affordances across the app such as: draft preview with **Accept / Reject / Edit & send**, regeneration or “try another tone,” scheduling suggestion with **confirm/snooze**, queue of items awaiting review, or a focused “work this lead” panel. **Backend may stub** (timeout → fake body, static sample text, client-only state) but **controls and state transitions must be real** — not lorem tooltips on a chart.
 - **`AI-UX` discipline when `AI_NATIVE: YES`:** Phase 3 must **not** emit `AI-UX: NONE`. Use **`AMBIENT`** minimum; use **`CONVERSATIONAL`** when the user reads generated text as it arrives. Apply `references/DESIGN_SYSTEM.md` §9 (skeleton, optimistic patterns, streaming/typing when conversational).
+- **Anti-generic UI:** Phase 3 and Phase 7B must follow `references/ANTI_GENERIC_UI.md` — explicit `LAYOUT_SPEC`, per-screen `idea:`, `SIGNATURE_MOMENT`, `WEIRD_HOOK`, and `INSPIRATION` (three named references). Card-grid or “KPI row + table only” shells without transformation are non-compliant (see tripwires).
 
 **AI-native product bar (when `AI_NATIVE: YES`)**
 
@@ -228,6 +243,8 @@ If any of these appear, stop immediately and self-correct before continuing:
 - Any preamble that skips required phase blocks.
 - Any statement that phases will be merged, reordered, or skipped.
 - Client output is only cards/tables/charts with no mutation flows (read-only report UI).
+- Client matches the **generic SaaS template** tripwire: symmetrical card grid + generic hero as the only layout idea, no `LAYOUT_SPEC` / `SIGNATURE_MOMENT` from Phase 3, or Phase 3 omitted Anti-Generic blocks — treat as contract drift; revise Phase 3 (or `/redesign`) then rebuild client.
+- Client matches **Rejected shell** in **UI CONTRACT — ANTI-GENERIC** (light gray default workspace + uniform white shadow card grid + KPI/chart-only main, or light-only theme with no Eclipse dark default) — tripwire; revise Phase 3 + 7B.
 - Phase 0 **`AI_NATIVE: YES`** but the client has no dedicated surface where the user reviews, edits, accepts, or rejects AI-produced or AI-assisted content (or equivalent scheduling/suggestion confirmation flow) — stats-only or list-only is non-compliant.
 
 When tripwire is triggered, emit exactly:
@@ -345,18 +362,39 @@ OUTPUT: see references/STACK.md for folder structure
 
 ## PHASE 3 — DESIGN
 
-Read references/DESIGN_SYSTEM.md. Inherit the Ralph Design System fully.
-Override accent only if the domain genuinely calls for it.
+Read **`references/DESIGN_SYSTEM.md`** and **`references/ANTI_GENERIC_UI.md`**. Inherit the Ralph Design System for **tokens, components, and §9 primitives**. Inherit Anti-Generic for **layout, metaphor, tension, and rejection of template dashboards** (that file wins on structure when in conflict).
+Override palette/accent only if the domain genuinely calls for it.
 If Phase 0 **`AI_NATIVE: YES`**: **`AI-UX`** must be **`AMBIENT`** or **`CONVERSATIONAL`** (never **`NONE`**). Prefer **`CONVERSATIONAL`** when the user reads generated text. Name screens so the **first** listed screen is where the AI-assisted JTBD happens (draft/review/queue), not only a metrics overview.
 
+**Forbidden as the only story:** `LAYOUT: dashboard-grid` or `hero: stat-grid` **without** an explicit asymmetric `LAYOUT_SPEC`, `VISUAL_TENSION`, and per-screen `idea:` — generic “rounded cards + KPI row” is a tripwire.
+
 ```
+DESIGN_INTENT:
+- Core metaphor: [one line]
+- Visually distinct because: [one line]
+- Not generic because: [one line]
+
+SIGNATURE_MOMENT: [one defining interaction or visual — specific]
+
+VISUAL_TENSION: [where asymmetry, overlap, depth, or mixed density appears — specific]
+
+LAYOUT_SPEC:
+- Regions: [roles + rough sizing or flex behavior]
+- Fixed vs fluid: [what pins, what grows]
+- Mobile (<640px): [collapse order]
+
+INSPIRATION: [3 named UIs/products/domains — not “modern SaaS” / “clean dashboard”]
+
+WEIRD_HOOK: [one implementable memorable element for this app — see ANTI_GENERIC_UI §8]
+
 PALETTE:  Ralph Design System [OR] OVERRIDE: accent=[hex] accent2=[hex] because [reason]
-LAYOUT:   [sidebar-nav | top-nav | dashboard-grid | single-column]
+THEME:    dark-default  ← client must mount with data-theme=dark; ModeToggle switches to light (Eclipse), not a gray analytics template as default
+LAYOUT:   [structural label — must match LAYOUT_SPEC; e.g. sidebar-nav, split-inspector, single-column-stacked, canvas+rail]
 AI-UX:    [AMBIENT | CONVERSATIONAL | NONE]   ← if AI_NATIVE: YES, forbidden: NONE
 SCREENS (max 4, in build priority order; **fast** mode: max **3**):
-  1. [Name] | slug:[slug] | primary-action:[1 thing] | mutation-surface:[modal|inline|drawer] | hero:[stat-grid|list|chart|form] | components:[list]
-  2. [Name] | slug:[slug] | primary-action:[1 thing] | mutation-surface:[modal|inline|drawer] | components:[list]
-  3. [Name] | slug:[slug] | ...
+  1. [Name] | slug:[slug] | idea:[screen’s dominant concept] | primary-action:[1 thing] | mutation-surface:[modal|inline|drawer] | hero:[stat-grid|list|chart|form|none] | components:[list]
+  2. [Name] | slug:[slug] | idea:[...] | primary-action:[1 thing] | mutation-surface:[modal|inline|drawer] | components:[list]
+  3. [Name] | slug:[slug] | idea:[...] | ...
 EMPTY STATES: one per data screen
 RESPONSIVE:   640px breakpoint
 INTERACTION:  each screen defines at least one mutation; include one bulk action and one quick action across the app
@@ -420,7 +458,8 @@ FILE: spec/spec.md
 - If AI_NATIVE (Phase 0): document the ≥2 AI surfaces from Phase 3 and the primary JTBD screen; forbid stats-only MVP
 
 ## Design
-Palette: [PALETTE]  Layout: [LAYOUT]  Responsive: 640px  Mode: dark default
+Palette: [PALETTE]  Theme: dark default (ModeToggle)  Layout: [LAYOUT]  Responsive: 640px
+Anti-generic (from Phase 3 — paste or summarize): DESIGN_INTENT, SIGNATURE_MOMENT, VISUAL_TENSION, LAYOUT_SPEC, INSPIRATION (3), WEIRD_HOOK; per-screen `idea:` echoed from ## Screens
 Factory mode: [fast | normal | advanced]
 
 ## Stack
@@ -598,7 +637,7 @@ FILE: constitution.md
 - CORS defaults to localhost:5173 only. Expand allowed origins before staging/production deploys.
 
 ## Design Principles
-- Ralph Design System (Eclipse Edition). Read DESIGN_SYSTEM.md before writing UI.
+- Ralph Design System (Eclipse Edition) + Anti-Generic UI contract. Read references/DESIGN_SYSTEM.md and references/ANTI_GENERIC_UI.md before writing UI; implement Phase 3 LAYOUT_SPEC, ideas, and WEIRD_HOOK in layout — not token-violating card grids alone.
 - Dark mode is default. ModeToggle always present in nav.
 - Every data screen has an empty state.
 - Every list has a live search filter.
@@ -649,7 +688,9 @@ Type /continue to wake Ralph up and resume from here.
 
 Server is confirmed running before this phase starts.
 Write each file as a separate file action, one at a time.
-Read references/DESIGN_SYSTEM.md for all component code.
+**Mandatory:** Re-load **`references/ANTI_GENERIC_UI.md`** and **`references/DESIGN_SYSTEM.md`** from disk if they are not already in the current message context (same directory as this skill). Then implement Phase 3’s `LAYOUT_SPEC`, `WEIRD_HOOK`, tension, and per-screen `idea:` in JSX — **not** a fresh generic dashboard.
+
+**Order-of-operations for layout:** After `index.css`, implement **App shell** (`App.jsx` + first page) so the **asymmetric / mixed-density** structure exists **before** filling individual chart/table components. If the shell looks like the **Rejected shell** in **UI CONTRACT — ANTI-GENERIC**, stop and revise the shell to match `LAYOUT_SPEC` before writing other pages.
 Check off each client task from `spec/tasks.md` as it is completed.
 After writing each file, immediately update `spec/tasks.md` by changing the matching task from `[ ]` to `[x]` before moving on.
 
@@ -680,9 +721,11 @@ Code rules:
 - Mutation flows must show loading, success, and error feedback (for example: pending button state + toast/error inline).
 - AI-native behavior must be actionable, not decorative: at least one accept/reject (or edit-and-commit) AI suggestion flow tied to record data. When **`AI_NATIVE: YES`**, implement **all** Phase 3 **AI SURFACES** with real controls; use `setTimeout` + fake text, seed-backed copy, or simple POST fields to simulate generation — **never** only a static subtitle claiming “AI powered.”
 - Use **SkeletonLoader** / **StreamingText** / **TypingIndicator** per Phase 3 **AI-UX** and `references/DESIGN_SYSTEM.md` §9.
+- **Composition:** Honor `spec/spec.md` **## Design** anti-generic fields and Phase 3 `LAYOUT_SPEC` / `WEIRD_HOOK`. Prefer asymmetry, mixed density, or a distinct shell over an even N-column card grid as the primary layout.
 - Stat cards compute deltas from real data. Never hardcode delta values.
-- ModeToggle in nav. Dark mode default.
+- ModeToggle in nav. **Dark mode default** — `data-theme="dark"` on `<html>` before paint; body uses Eclipse dark gradients from DESIGN_SYSTEM §2, not a flat light-gray app background.
 - Responsive at 640px. aria-label on all icon-only buttons.
+- **No Tailwind “template kit” defaults as the whole UI:** avoid `bg-gray-50` / `bg-slate-50` page + repeated `bg-white rounded-2xl shadow` cards unless Phase 3 explicitly documented that treatment **and** paired it with `WEIRD_HOOK` + tension. Prefer `var(--bg)`, `var(--surface)`, editorial type scale.
 
 If the response is getting very long before all screens are complete, write the current file cleanly
 and emit this message exactly — never stop silently:
@@ -734,7 +777,7 @@ FACTORY COMPLETE
 
   App:        [name]
   Stack:      React + Vite · Express · libsql
-  Design:     Ralph Design System · Dark and Light
+  Design:     Ralph Design System + Anti-Generic composition · Dark and Light
   Spec:       spec/spec.md
   Tasks:      spec/tasks.md · [n] tasks checked
   Tests:      written before code
@@ -744,6 +787,8 @@ FACTORY COMPLETE
   Security:   [verdict]
   Mode:       [fast | normal | advanced]
   Tests run:  [if executed: pass/fail summary | if not: "not executed — run locally"]
+  Tokens:     [if reported by environment: input X · output Y · total Z | if not: "not reported — check your IDE token counter"]
+
 
   npm run install:all && npm run dev
   → client:  http://localhost:5173
@@ -798,6 +843,7 @@ What it does:
 - Phase 5 — writes `spec/tasks.md` from `spec/spec.md`
 - Phase 6 — writes tests from spec + tasks
 - Phases 7A, 7B, 8 — same as full factory
+- Phase 7B: read `references/DESIGN_SYSTEM.md` and `references/ANTI_GENERIC_UI.md`; implement `spec/spec.md` **## Design** (including anti-generic fields when present). If **## Design** lacks those fields, still avoid the generic SaaS-only tripwire and align layout with **## Screens** explicitly.
 
 Emit at the start:
 
@@ -961,9 +1007,10 @@ What it does:
 
 - Reads existing `spec/spec.md` for entities, routes, and screen slugs
 - Reads existing constitution.md for stack and design constraints
-- Re-runs Phase 3 — produces a new design block (palette, layout, screens, components)
+- Re-runs Phase 3 — produces a new design block including **Anti-Generic** sections (`DESIGN_INTENT`, `LAYOUT_SPEC`, `INSPIRATION`, `WEIRD_HOOK`, per-screen `idea:`) plus palette, layout, screens, components
+- Updates **`spec/spec.md` only** in **## Screens** and **## Design** to match the new Phase 3 output (all other spec sections unchanged) so the spec stays aligned with the rebuilt client
 - Re-runs Phase 7B — rewrites the entire client against the new design
-- Does not touch the server, `spec/spec.md`, `spec/tasks.md`, or tests
+- Does not touch the server, `spec/tasks.md`, tests, or constitution.md (unless you choose to refresh constitution **## Design Principles** from the template — optional)
 
 Emit at the start:
 
@@ -998,7 +1045,7 @@ SCOPE: client only — server unchanged
 | Tests            | Written in Phase 6 before Phase 7A. Expected to fail until built.                                                       |
 | Constitution     | First file written in Phase 7A. Source-of-truth baseline; `/rebuild` may regenerate it from current spec/contracts.     |
 | Stack            | React + Vite + Tailwind · Express + Node · libsql                                                                       |
-| Design           | Ralph Design System — read DESIGN_SYSTEM.md before Phase 3                                                              |
+| Design           | Ralph Design System + Anti-Generic UI — read references/DESIGN_SYSTEM.md and references/ANTI_GENERIC_UI.md before Phase 3; same pair before Phase 7B |
 | Colors           | Zero hardcoded hex. Every color is var(--token).                                                                        |
 | Ralph            | Phase 0 restate and DEFERRED tags only. Nowhere else.                                                                   |
 | Phases 6 and 8   | Always emitted. Never skipped. Never merged.                                                                            |
