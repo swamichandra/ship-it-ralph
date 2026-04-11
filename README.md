@@ -5,8 +5,9 @@
 ```
 /factory YOUR 1-SENTENCE IDEA  →  working app at localhost:5173
 ```
-
 Runs the **Ralph Wiggum Loop** autonomously — spec first, tasks, tests before code, server, client, security pass. Nothing builds against the prompt alone; everything traces to `spec/spec.md` and `spec/tasks.md`.
+
+![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 
 Works with: [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/)
 
