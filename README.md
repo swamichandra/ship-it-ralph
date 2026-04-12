@@ -1,64 +1,72 @@
 # Ship-it-Ralph
 
-> A spec-driven AI Skill that turns a one-line idea into a working full-stack app.
+> A spec-driven AI Skill that turns one clear sentence into a working full-stack app.
 
+```text
+/factory YOUR IDEA  →  spec → tasks → tests → server → client → security
 ```
-/factory YOUR 1-SENTENCE IDEA  →  working app at localhost:5173
-```
-Runs the **Ralph Wiggum Loop** autonomously — spec first, tasks, tests before code, server, client, security pass. Nothing builds against the prompt alone; everything traces to `spec/spec.md` and `spec/tasks.md`.
+
+Ship-it-Ralph runs the **Ralph Wiggum Loop** autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt. fileciteturn0file0 fileciteturn0file1
+
+Works with [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/).
 
 ![Ship-it-Ralph](logo.png "Ship-it-Ralph")
 
-Works with: [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/)
+---
+
+## Why it exists
+
+Most AI coding workflows jump straight from prompt to code. That usually means shallow product thinking, fuzzy scope, and UI that looks like a generic dashboard.
+
+Ship-it-Ralph is built around **Spec-Driven Development**:
+
+- define the product before writing code
+- make the spec the source of truth
+- derive tasks and tests from the spec
+- force the build to prove itself in phases
+
+A sharp spec produces a sharp app. A vague spec produces a vague app. Ralph makes that visible early. fileciteturn0file0
 
 ---
 
-## Contents
+## What makes this version different
 
-- [Quick start](#-quick-start)
-- [What gets created](#what-gets-created)
-- [The nine phases](#the-nine-phases)
-- [Commands & controls](#commands--controls)
-- [Run modes](#run-modes)
-- [After the build](#after-the-build)
-- [Example ideas](#example-ideas)
-- [Limitations](#limitations)
-- [Repo layout](#repo-layout)
-- [Docs & advanced options](#docs--advanced-options)
+This version is stricter about product thinking, AI-native behavior, and design quality.
+
+- **Better PM + architect thinking.** Ralph should not stop at the obvious CRUD version of an idea. It should push into adjacent, credible product moves that sharpen the core job without turning the app into a bloated science project.
+- **Real AI-native UX.** If the idea implies AI, the app must show it in the interface through visible actions, review flows, and accept/reject or edit-and-commit moments. Decorative “AI-powered” labels do not count.
+- **More opinionated design.** The factory rejects the default SaaS shell and pushes toward stronger layout, clearer screen ideas, and more intentional interaction design.
+- **Light mode by default for productivity apps.** Planning, writing, task, workflow, and day-to-day tools should usually open in light mode unless the concept strongly calls for dark.
+
+These defaults are enforced through `SKILL.md`, `references/DESIGN_SYSTEM.md`, and `references/ANTI_GENERIC_UI.md`. fileciteturn0file1turn0file2turn0file4
 
 ---
 
-## ⚡ Quick start
-
-**Prerequisites:** Node.js 22, npm, and an agent-capable IDE.
+## Quick start
 
 ### 1. Install
 
-Copy the bundle into your workspace. No npm install.
+Clone this repo and copy it into your workspace. No package install is needed for the skill itself.
 
 ```bash
-# 1. Clone it
 git clone https://github.com/swamichandra/ship-it-ralph
 cd ship-it-ralph
 
-# Set to your project's root folder
 WORKSPACE=/path/to/your-workspace
-
-# 2. Install to your project 
 mkdir -p "$WORKSPACE/.agents/ship-it-ralph"
 cp -r . "$WORKSPACE/.agents/ship-it-ralph/"
 rm -rf "$WORKSPACE/.agents/ship-it-ralph/.git"
 ```
 
-> **Also works under `.github/`** (e.g. GitHub Copilot). Same files, same layout.
+Also works under `.github/` for setups that prefer GitHub Copilot-style skill loading. fileciteturn0file0turn0file1
 
-### 2. Run
+### 2. Run it
 
 ```text
 /factory a subscription tracker that warns before renewals
 ```
 
-### 3. Review spec before building (optional)
+### 3. Optional: review the spec before build
 
 ```text
 /factory --review a subscription tracker that warns before renewals
@@ -72,213 +80,317 @@ rm -rf "$WORKSPACE/.agents/ship-it-ralph/.git"
 npm run install:all && npm run dev
 ```
 
-- Client → `http://localhost:5173`
-- API → `http://localhost:3001`
-- Tests → `npm run dev:server` then `npm test`
+- client → `http://localhost:5173`
+- server → `http://localhost:3001`
+- tests → `npm run dev:server` then `npm test`
 
-> **Where the app lands:** `../ralph-apps/[prefix]-[slug]` (sibling of your project). If your environment blocks writes above workspace root, edit `RUN BOOTSTRAP → Location rule` in your installed `SKILL.md` and change `../ralph-apps/` to `./ralph-apps/`.
-
----
-
-## What gets created
-
-| Output | Purpose |
-|--------|---------|
-| `spec/spec.md` | Contract — entities, routes, screens, stack, **## Design** (palette + anti-generic summary after Phase 3) |
-| `spec/tasks.md` | Atomic build tasks (server first, then client) |
-| `tests/` | Vitest specs written before the server exists |
-| `server/` | Express + SQLite (libsql) + CRUD routes |
-| `client/` | React + Vite + Tailwind + Ralph Design System (tokens/components) and Anti-Generic composition from Phase 3 / `spec/spec.md` **## Design** |
-| `constitution.md` | Project rules — first artifact written in Phase 7A |
+Generated apps land in `../ralph-apps/[prefix]-[slug]` by default. If your environment blocks writing above the workspace root, change the location rule in `SKILL.md` to use `./ralph-apps/` instead. fileciteturn0file0turn0file1
 
 ---
 
-## The nine phases
+## The loop
 
-| # | Phase | What it does |
-|---|-------|--------------|
-| 0 | Intake | Plain-English restatement; sets `FACTORY_MODE` |
-| 1 | PM | Product name, jobs-to-be-done, MVP scope |
-| 2 | Architect | Stack, entities, routes |
-| 3 | Design | Screens, slugs, Ralph Design System + [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) (layout, metaphor, tripwires) |
-| 4 | Spec | Writes `spec/spec.md` |
-| 5 | Tasks | Writes `spec/tasks.md` |
-| 6 | Tests | Vitest specs before any server code |
-| 7A | Server | Express + SQLite; health check required before 7B |
-| 7B | Client | React + Vite + Tailwind; mutation flows required — no read-only dashboards |
-| 8 | Security | Findings, auto-fixes, SHIP / SHIP_WITH_NOTES / DO_NOT_SHIP |
+Ship-it-Ralph runs nine phases in order:
 
-The diagram shows how partial commands re-enter the flow.
+1. **Intake** — restates the idea plainly and sets mode
+2. **PM** — locks user, problem, jobs, MVP
+3. **Architect** — defines entities, routes, stack, charts
+4. **Design** — defines layout, screen ideas, interaction model, anti-generic intent
+5. **Spec** — writes `spec/spec.md`
+6. **Tasks** — writes `spec/tasks.md`
+7. **Tests** — writes tests before implementation
+8. **Server** — builds Express + libsql and verifies health
+9. **Client + Security** — builds the UI, checks interaction quality, runs the security pass
 
-```mermaid
-flowchart TD
-    START([/factory]) --> P0
-    STARTREVIEW([/factory --review]) --> P0
-    FROM_SPEC([/from-spec]) --> P5
-
-    P0[0 · Intake] --> P1
-    P1[1 · PM] --> P2
-    P2[2 · Architect] --> P3
-    P3[3 · Design] --> P4
-
-    subgraph CONTRACT [" Spec before code "]
-        P4[4 · Spec\nspec/spec.md] --> REVIEWGATE{--review?}
-        REVIEWGATE -->|no| P5
-        REVIEWGATE -->|yes| PAUSE([Pause · edit spec/spec.md])
-        PAUSE -->|/approve| P5
-        P5[5 · Tasks\nspec/tasks.md] --> P6
-        P6[6 · Tests]
-    end
-
-    P6 --> P7A
-
-    subgraph BUILD [" Build "]
-        P7A[7A · Server] --> GATE{Health check}
-        GATE -->|pass| P7B
-        GATE -->|fix| P7A
-        P7B[7B · Client] --> INTGATE{Interaction check}
-        INTGATE -->|pass| P8
-        INTGATE -->|read-only detected| TRIPWIRE([TRIPWIRE · self-correct])
-        TRIPWIRE --> P7B
-    end
-
-    P8[8 · Security] --> DONE([Complete])
-
-    CONTINUE([/continue]) -.->|after truncation| BUILD
-    TESTS_CMD([/tests]) --> P6
-    SEC_CMD([/security]) --> P8
-    RETASK([/retask]) --> P5
-    REDESIGN([/redesign]) --> P3
-    RESPEC([/respec]) --> P1
-    REBUILD([/rebuild]) --> P7A
-
-    style CONTRACT fill:#1a1a2e,stroke:#444,color:#ccc
-    style BUILD fill:#1a2e1a,stroke:#444,color:#ccc
-    style GATE fill:#2e1a1a,stroke:#888,color:#fff
-    style PAUSE fill:#2e2a1a,stroke:#888,color:#fff
-    style DONE fill:#1a2e1a,stroke:#4a4,color:#ccc
-    style CONTINUE stroke:#666,stroke-dasharray:4
-```
+The key discipline is simple: **nothing builds against the prompt alone**. Everything traces back to the spec and task list. fileciteturn0file0turn0file1
 
 ---
 
-## Commands & controls
+## Commands
 
-| Trigger | Phases | Use when |
-|---------|--------|----------|
-| `/factory` | 0–8 | Greenfield idea → full app |
-| `/factory --review` | 0–4 pause, then `/approve` → 5–8 | Edit `spec/spec.md` before build |
-| `/approve` | 5–8 | Continue after `--review` pause |
-| `/from-spec` | 5–8 | You already have `spec/spec.md` |
-| `/continue` | Resume 7A or 7B | After "Ralph got sleepy" truncation |
-| `/rebuild` | 7A, 7B, 8 | Clean rebuild from current spec + tasks |
-| `/respec` | 1–5 | New scope — rewrites spec + tasks, no code |
-| `/redesign` | 3, 7B | Server OK; new UI — updates `spec/spec.md` **## Screens** and **## Design** to match Phase 3 |
-| `/retask` | 5 | Refresh `spec/tasks.md` after spec edits |
-| `/tests` | 6 | Regenerate tests only |
-| `/security` | 8 | Re-audit after manual edits |
+### Full runs
 
-> `/approve` requires a prior `--review` pause. On a bare `spec/spec.md` without one, use `/from-spec` instead.
+| Trigger | What it does |
+|---|---|
+| `/factory [idea]` | Full greenfield run |
+| `/factory --review [idea]` | Stops after spec so you can edit before build |
+| `/factory --fast [idea]` | Reduced scope |
+| `/factory --advanced [idea]` | Deeper spec + stricter security + test evidence |
 
-Full prerequisite list and emit strings: [`SKILL.md`](SKILL.md) → COMMAND MAP.
+### Partial runs
+
+| Trigger | What it does |
+|---|---|
+| `/approve` | Continue after `--review` |
+| `/from-spec` | Build from existing `spec/spec.md` |
+| `/respec [idea]` | Rewrite spec and tasks only |
+| `/rebuild` | Rebuild server and client from current spec + tasks |
+| `/redesign` | Keep the server, replace the client design |
+| `/retask` | Regenerate tasks from the spec |
+| `/tests` | Regenerate tests only |
+| `/security` | Run the security pass only |
+| `/continue` | Resume after token truncation |
+
+All of these are defined in `SKILL.md`. fileciteturn0file1
 
 ---
 
 ## Run modes
 
-| Mode | Flag | What changes |
-|------|------|--------------|
-| **fast** | `--fast` | Fewer features, entities, screens, seed rows |
-| **normal** | default | Standard behavior |
-| **advanced** | `--advanced` | Adds Assumptions + Risks to spec, richer security findings, honest `npm test` evidence |
+### `--fast`
 
-All modes run all nine phases. Phase 6 and Phase 8 are never skipped.
+For smaller builds. Ralph keeps the app tight:
+- up to 3 MVP features
+- up to 2 entities
+- up to 3 screens
+- fewer seed records
+
+### default
+
+The normal mode for most ideas.
+
+### `--advanced`
+
+Same general product scope, but with more rigor:
+- adds assumptions and risks to the spec
+- produces a deeper security section
+- requires honest test evidence when commands can run
+
+Modes tune scope and depth. They do **not** skip phases. Tests and security always run. fileciteturn0file1
+
+---
+
+## What gets created
 
 ```text
-/factory --fast a tiny two-screen app
-/factory --advanced --review an app you'll harden before shipping
-/from-spec --advanced
+spec/
+  spec.md
+  tasks.md
+tests/
+  api.test.js
+  seed.test.js
+server/
+  Express + libsql
+client/
+  React + Vite + Tailwind
+constitution.md
+.ralph/
+  build memory and orchestration internals
 ```
 
----
-
-## After the build
-
-Read `spec/spec.md` first — it's the contract for what was built.
-
-| File | Next step |
-|------|-----------|
-| `server/db/seed.js` | Replace demo data |
-| `server/db/schema.js` | Switch in-memory → file DB for persistence |
-| `client/src/pages/` | Tweak labels and layout |
-| `constitution.md` | Amend before onboarding other developers |
+Every generated app is a small, inspectable project with a durable spec at the center. fileciteturn0file0turn0file1
 
 ---
 
-## Example ideas
+## Design bar
 
-```text
-/factory a subscription tracker that warns before renewals
-/factory a hiring pipeline tracker for a recruiting team
-/factory a restaurant menu and order management system
-/factory a reading list tracker with notes and ratings
-/factory a pet care log for a veterinary clinic
-/factory an equipment maintenance tracker for a facilities team
-/factory a conference talk submission and review tool
-/factory a freelancer invoice and payment tracker
-/factory a gym class booking system for a small studio
-/factory a plant watering tracker with care instructions
-```
+Ship-it-Ralph does not aim for “modern SaaS.” It aims for software that feels intentional.
+
+That means:
+- no default KPI-card dashboard shell
+- no symmetrical card grid as the whole product
+- no vague “clean UI” direction
+- every screen needs a strong idea
+- layout must be explicit, not implied
+- at least one memorable hook must be implemented
+- motion should communicate state, not decorate the screen
+
+The anti-generic contract is what keeps the build from collapsing into the same card-and-chart layout models tend to produce by default. fileciteturn0file2
+
+### Light vs dark
+
+The design system supports both themes. The current default should follow the product:
+- **light first** for productivity, planning, writing, workflow, and operating tools
+- **dark first** only when the concept genuinely benefits from it
+
+Either way, the theme should be set before first paint and ModeToggle should always be available. The design system handles the tokens; the layout contract handles the overall shell. fileciteturn0file4turn0file2
 
 ---
 
-## Limitations
+## AI-native bar
 
-Ship-it-Ralph targets MVPs. These are not generated by default:
+When an idea implies AI, Ralph should treat that as a product requirement, not a branding flourish.
 
-- OAuth / full auth (auth is `none`)
-- Stripe or payment providers
-- File uploads or WebSockets
+An AI-native app must show its value in the UX through things like:
+- draft generation
+- suggestions the user can accept or reject
+- rewrite or regenerate flows
+- scheduling or prioritization proposals
+- review queues
+- AI-assisted state changes tied to real records
 
-Each is marked `[RALPH DEFERRED]` with a TODO. Max three per run — a fourth triggers a scope-split recommendation.
+Stubbed behavior is fine. Fake value is not.
+
+The user should be able to **see the AI think, review the output, and decide what happens next**. The design system includes patterns for skeletons, optimistic updates, streaming text, and ambient indicators to support that. fileciteturn0file1turn0file4
+
+---
+
+## What Ralph will not build by default
+
+These stay deferred unless you intentionally split scope or extend the factory:
+
+- OAuth and full auth
+- payments
+- email
+- file uploads
+- websockets
+
+Deferred features are marked in code with a Ralph comment block and TODO instructions. Too many deferred systems in one run should trigger a scope split instead of a half-built app. fileciteturn0file1
 
 ---
 
 ## Repo layout
 
-```
-SKILL.md                    ← authoritative policy (phases, commands, verification)
+```text
+SKILL.md
 references/
-├── DESIGN_SYSTEM.md        ← Eclipse palette, components, §9 AI-native patterns
-├── ANTI_GENERIC_UI.md      ← layout / metaphor contract (overrides generic structure)
-├── STACK.md
-└── CONSTITUTION.md
-orchestrator/               ← optional hybrid context layer
-docs/
-├── USER_GUIDE.md
-├── ORCHESTRATOR_GUIDE.md
-└── ARCHITECTURE.md
-assets/  scripts/  evals/   ← optional
-.github/
-└── README.md               ← install note for .github/ layout
+  DESIGN_SYSTEM.md
+  ANTI_GENERIC_UI.md
+  STACK.md
+  CONSTITUTION.md
+optional:
+  orchestrator/
+  docs/
+  assets/
+  scripts/
+  evals/
 ```
 
-**Anti-generic UI:** Copy the whole **`references/`** folder with **`SKILL.md`** (including **`ANTI_GENERIC_UI.md`**). The skill text orders a disk read before Phase 3 and 7B, but your IDE only applies that if this factory skill is actually loaded for the session. If builds still look like a default analytics template, start the prompt with **`@`-references** to [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) and [`references/DESIGN_SYSTEM.md`](references/DESIGN_SYSTEM.md), or run **`/redesign`** after a full build so Phase 3 + 7B re-execute with those files in context.
+`SKILL.md` is the source of truth. The files under `references/` support it:
+- `DESIGN_SYSTEM.md` defines tokens, components, and AI-native UI primitives
+- `ANTI_GENERIC_UI.md` defines layout, composition, tension, and rejection rules
+- `STACK.md` defines implementation templates
+- `CONSTITUTION.md` explains how generated constitutions should be written
+
+All paths resolve relative to the folder that contains `SKILL.md`. fileciteturn0file1turn0file2turn0file3turn0file4
 
 ---
 
-## Docs & advanced options
+## Good prompts for Ralph
 
-| Need | Where to look |
-|------|--------------|
-| Step-by-step walkthroughs | [`docs/USER_GUIDE.md`](docs/USER_GUIDE.md) |
-| Lower token usage on long runs | [`docs/ORCHESTRATOR_GUIDE.md`](docs/ORCHESTRATOR_GUIDE.md) |
-| Authority and layering model | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
-| Full phase contracts and verification rules | [`SKILL.md`](SKILL.md) |
-| UI tokens, components, Eclipse palette | [`references/DESIGN_SYSTEM.md`](references/DESIGN_SYSTEM.md) |
-| Anti-template layout, `LAYOUT_SPEC`, tripwires | [`references/ANTI_GENERIC_UI.md`](references/ANTI_GENERIC_UI.md) |
+Ralph works best when the idea names the user, the job, and the core action.
 
-PRs welcome. Test changes to `SKILL.md` against multiple ideas before submitting.
+Better:
+
+```text
+/factory an AI-native follow-up planner for solo consultants who keep forgetting to close loops after client calls
+```
+
+Weaker:
+
+```text
+/factory make me a productivity app
+```
+
+You do not need to over-prompt. But you do need to be concrete.
+
+---
+
+## When to use `/redesign`
+
+Use `/redesign` when the server is good but the experience is not.
+
+That is the right move when:
+- the app works, but the layout feels generic
+- the screens exist, but do not express a strong concept
+- the AI surfaces are too hidden or too decorative
+- the theme choice feels wrong for the product
+- the shell lacks rhythm, tension, or clarity
+
+`/redesign` should keep the backend intact and rebuild the client around a better Phase 3. fileciteturn0file1turn0file2
+
+
+---
+## Flow of a Ralph Run
+```mermaid
+flowchart TD
+    START["/factory"] --> P0
+    STARTREVIEW["/factory --review"] --> P0
+    FROMSPEC["/from-spec"] --> P5
+
+    P0["0 · Intake"] --> P1
+    P1["1 · PM"] --> P2
+    P2["2 · Architect"] --> P3
+    P3["3 · Design"] --> P4
+
+    subgraph CONTRACT ["Spec before code"]
+        P4["4 · Spec\nspec/spec.md"] --> REVIEW{"--review?"}
+        REVIEW -->|no| P5
+        REVIEW -->|yes| PAUSE["Pause · edit spec/spec.md"]
+        PAUSE --> APPROVE["/approve"]
+        APPROVE --> P5
+        P5["5 · Tasks\nspec/tasks.md"] --> P6
+        P6["6 · Tests"]
+    end
+
+    P6 --> P7A
+
+    subgraph BUILD ["Build"]
+        P7A["7A · Server"] --> HEALTH{"Health check"}
+        HEALTH -->|fix| P7A
+        HEALTH -->|pass| P7B
+        P7B["7B · Client"] --> UIGATE{"UI / interaction gate"}
+        UIGATE -->|fix| P7B
+        UIGATE -->|pass| P8
+    end
+
+    P8["8 · Security"] --> DONE["Complete"]
+
+    TESTS["/tests"] --> P6
+    SECURITY["/security"] --> P8
+    RETASK["/retask"] --> P5
+
+    RESPEC["/respec"] --> RP1["1 · PM"]
+    RP1 --> RP2["2 · Architect"]
+    RP2 --> RP3["3 · Design"]
+    RP3 --> RP4["4 · Spec"]
+    RP4 --> RP5["5 · Tasks"]
+    RP5 --> RESPECDONE["Respec complete\nNo code changed"]
+
+    REDESIGN["/redesign"] --> RD3["3 · Design"]
+    RD3 --> RDSPEC["Update spec/spec.md\nScreens + Design only"]
+    RDSPEC --> RD7B["7B · Client"]
+    RD7B --> REDESIGNDONE["Redesign complete\nServer unchanged"]
+
+    REBUILD["/rebuild"] --> RB7A["7A · Server"]
+    RB7A --> RBHEALTH{"Health check"}
+    RBHEALTH -->|fix| RB7A
+    RBHEALTH -->|pass| RB7B["7B · Client"]
+    RB7B --> RB8["8 · Security"]
+    RB8 --> REBUILDDONE["Rebuild complete"]
+
+    CONTINUE["/continue"] --> RESUME{"Next unchecked task\nin spec/tasks.md"}
+    RESUME -->|server task| C7A["Resume 7A"]
+    RESUME -->|client task| CHEALTH{"Confirm health"}
+    CHEALTH -->|fix server| C7A
+    CHEALTH -->|pass| C7B["Resume 7B"]
+    C7A --> P7A
+    C7B --> P7B
+```
+---
+
+## Limitations
+
+Ship-it-Ralph is for MVPs. It is opinionated, narrow, and deliberately constrained.
+
+That is the point.
+
+It is not trying to replace product strategy, engineering judgment, or design craft. It is trying to make those things legible and executable inside an AI-assisted build loop.
+
+---
+
+## Docs
+
+| Need | File |
+|---|---|
+| Full phase rules | `SKILL.md` |
+| Design tokens and components | `references/DESIGN_SYSTEM.md` |
+| Layout and anti-template rules | `references/ANTI_GENERIC_UI.md` |
+| Constitution guidance | `references/CONSTITUTION.md` |
+
+---
+
+PRs welcome. Test changes against multiple ideas before merging.
 
 [Issues](https://github.com/swamichandra/ship-it-ralph/issues) · MIT License
 
