@@ -5,7 +5,7 @@
 ```text
 /factory YOUR 1-SENTENCE IDEA
 ```
-→ spec → tasks → tests → server → client → security
+idea → spec → tasks → tests → server → client → security
 → Working app at localhost:5173
 
 Ship-it-Ralph runs the [**Ralph Wiggum Loop**](https://ghuntley.com/loop/) autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt.  
