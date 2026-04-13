@@ -6,7 +6,7 @@
 /factory YOUR IDEA  →  spec → tasks → tests → server → client → security
 ```
 
-Ship-it-Ralph runs the **Ralph Wiggum Loop** autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt. fileciteturn0file0 fileciteturn0file1
+Ship-it-Ralph runs the **Ralph Wiggum Loop** autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt.  
 
 Works with [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/).
 
@@ -25,7 +25,7 @@ Ship-it-Ralph is built around **Spec-Driven Development**:
 - derive tasks and tests from the spec
 - force the build to prove itself in phases
 
-A sharp spec produces a sharp app. A vague spec produces a vague app. Ralph makes that visible early. fileciteturn0file0
+A sharp spec produces a sharp app. A vague spec produces a vague app. Ralph makes that visible early.
 
 ---
 
@@ -38,7 +38,7 @@ This version is stricter about product thinking, AI-native behavior, and design 
 - **More opinionated design.** The factory rejects the default SaaS shell and pushes toward stronger layout, clearer screen ideas, and more intentional interaction design.
 - **Light mode by default for productivity apps.** Planning, writing, task, workflow, and day-to-day tools should usually open in light mode unless the concept strongly calls for dark.
 
-These defaults are enforced through `SKILL.md`, `references/DESIGN_SYSTEM.md`, and `references/ANTI_GENERIC_UI.md`. fileciteturn0file1turn0file2turn0file4
+These defaults are enforced through `SKILL.md`, `references/DESIGN_SYSTEM.md`, and `references/ANTI_GENERIC_UI.md`.
 
 ---
 
@@ -58,7 +58,7 @@ cp -r . "$WORKSPACE/.agents/ship-it-ralph/"
 rm -rf "$WORKSPACE/.agents/ship-it-ralph/.git"
 ```
 
-Also works under `.github/` for setups that prefer GitHub Copilot-style skill loading. fileciteturn0file0turn0file1
+Also works under `.github/` for setups that prefer GitHub Copilot-style skill loading.
 
 ### 2. Run it
 
@@ -84,7 +84,7 @@ npm run install:all && npm run dev
 - server → `http://localhost:3001`
 - tests → `npm run dev:server` then `npm test`
 
-Generated apps land in `../ralph-apps/[prefix]-[slug]` by default. If your environment blocks writing above the workspace root, change the location rule in `SKILL.md` to use `./ralph-apps/` instead. fileciteturn0file0turn0file1
+Generated apps land in `../ralph-apps/[prefix]-[slug]` by default. If your environment blocks writing above the workspace root, change the location rule in `SKILL.md` to use `./ralph-apps/` instead. 
 
 ---
 
@@ -102,7 +102,7 @@ Ship-it-Ralph runs nine phases in order:
 8. **Server** — builds Express + libsql and verifies health
 9. **Client + Security** — builds the UI, checks interaction quality, runs the security pass
 
-The key discipline is simple: **nothing builds against the prompt alone**. Everything traces back to the spec and task list. fileciteturn0file0turn0file1
+The key discipline is simple: **nothing builds against the prompt alone**. Everything traces back to the spec and task list. 
 
 ---
 
@@ -131,7 +131,11 @@ The key discipline is simple: **nothing builds against the prompt alone**. Every
 | `/security` | Run the security pass only |
 | `/continue` | Resume after token truncation |
 
-All of these are defined in `SKILL.md`. fileciteturn0file1
+All of these are defined in `SKILL.md`. 
+
+
+### Optional: Lower-token execution with the orchestrator
+For long or interruption-prone runs, you can ask the agent to use the orchestrator layer. It executes the factory phase by phase, loads only the context needed for the current step, verifies before advancing, and makes recovery flows cleaner. To use it, say: `Read orchestrator/ORCHESTRATOR.md and run the factory with SKILL.md precedence.` The orchestrator changes how the factory executes, not what the factory is. For short, simple runs, the standard factory invocation is usually enough. The orchestrator is most helpful when the build is long enough that phase-local execution becomes a real advantage.
 
 ---
 
@@ -156,7 +160,7 @@ Same general product scope, but with more rigor:
 - produces a deeper security section
 - requires honest test evidence when commands can run
 
-Modes tune scope and depth. They do **not** skip phases. Tests and security always run. fileciteturn0file1
+Modes tune scope and depth. They do **not** skip phases. Tests and security always run. 
 
 ---
 
@@ -178,11 +182,11 @@ constitution.md
   build memory and orchestration internals
 ```
 
-Every generated app is a small, inspectable project with a durable spec at the center. fileciteturn0file0turn0file1
+Every generated app is a small, inspectable project with a durable spec at the center. 
 
 ---
 
-## Design bar
+## Design System
 
 Ship-it-Ralph does not aim for “modern SaaS.” It aims for software that feels intentional.
 
@@ -235,7 +239,7 @@ These stay deferred unless you intentionally split scope or extend the factory:
 - file uploads
 - websockets
 
-Deferred features are marked in code with a Ralph comment block and TODO instructions. Too many deferred systems in one run should trigger a scope split instead of a half-built app. fileciteturn0file1
+Deferred features are marked in code with a Ralph comment block and TODO instructions. Too many deferred systems in one run should trigger a scope split instead of a half-built app. 
 
 ---
 
