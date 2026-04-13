@@ -1,10 +1,10 @@
 # Ralph Design System — Eclipse Edition
-### Geist (body) · Instrument Serif (display) · Coral + Cyan · Dark/Light mode
+### Geist (body) · Instrument Serif (display) · Coral + Cyan · Light/Dark mode
 
 A premium interface system with editorial typography, restrained glass surfaces, and a clear
 hierarchy of neutral surfaces, coral focal accents, and cyan data accents.
 
-**Composition (layout, metaphor, anti-template):** Use **`references/ANTI_GENERIC_UI.md`** alongside this file. It governs screen concept, explicit layout, asymmetry, and bans lazy “default SaaS” shells. On conflicts about **structure or patterns**, that file wins. This file remains authoritative for **CSS variables, type scale, listed JSX components, Usage Principles, and §9 AI-native primitives** — still apply those unless Anti-Generic explicitly overrides.
+**Composition (layout, metaphor, anti-template, theme default):** Use **`references/ANTI_GENERIC_UI.md`** alongside this file. It governs screen concept, explicit layout, asymmetry, experiential quality, and when light or dark should be the default. On conflicts about **structure, patterns, or theme-default policy**, that file wins. This file remains authoritative for **CSS variables, type scale, listed JSX components, usage principles, and §9 AI-native primitives**.
 
 ---
 
@@ -19,6 +19,7 @@ hierarchy of neutral surfaces, coral focal accents, and cyan data accents.
 7. Components (JSX)
 8. ModeToggle
 9. AI-Native Patterns
+10. Theme-default guidance
 
 ---
 
@@ -29,11 +30,11 @@ hierarchy of neutral surfaces, coral focal accents, and cyan data accents.
 | Palette, radii, shadows, type tokens, body background, glass tokens | This file (§§1–3) |
 | Component snippets (Button, Card, ModeToggle, etc.) | This file (§§7–8) |
 | AI loading / optimistic / streaming UX | This file §9 |
-| **Screen metaphor, bespoke layout, avoiding card-grid dashboards, “signature moment,” implementable weird hook** | **`ANTI_GENERIC_UI.md`** |
+| **Screen metaphor, bespoke layout, avoiding card-grid dashboards, theme default, “signature moment,” implementable weird hook, experience polish** | **`ANTI_GENERIC_UI.md`** |
 
 Do not “design in the tokenizer” as a neat card stack: **compose** with a clear `LAYOUT_SPEC` and tension from Anti-Generic, then **skin** with Eclipse tokens and primitives here.
 
-**Factory / Ship-it-Ralph warning:** Models often ship **light gray page + white `rounded-2xl shadow` cards** (Tailwind defaults) for dashboards. That is **explicitly out of contract** unless Phase 3 justified it with full Anti-Generic blocks. **Default app theme is `data-theme="dark"`** with the **§2 body** background — use **`var(--bg)`**, **`var(--surface)`**, **`var(--text)`**, not `bg-gray-50` + `bg-white` as the primary shell.
+**Factory / Ship-it-Ralph warning:** models often ship **light gray page + white `rounded-2xl shadow` cards** or a generic dark dashboard. Both are out of contract unless Phase 3 justified them. The default app theme must come from **Phase 3**, not habit. Use **`var(--bg)`**, **`var(--surface)`**, **`var(--text)`**, not Tailwind’s stock shell colors as the primary experience.
 
 ---
 
@@ -224,11 +225,8 @@ img, svg { display: block; max-width: 100%; }
 
 JSX usage:
 ```jsx
-// Page-load stagger
 style={{ animation: 'fadeUp 0.5s var(--ease-out) both', animationDelay: '0s' }}
-// List row stagger
 style={{ animation: 'fadeUp 0.35s var(--ease-out) both', animationDelay: `${i * 0.03}s` }}
-// Screen enter
 style={{ animation: 'fadeIn 0.25s ease both' }}
 ```
 
@@ -250,38 +248,11 @@ npm install iconoir-react
 
 Usage with npm:
 ```jsx
-import { Plus, Trash, EditPencil, Search, Moon, SunLight,
-         Dashboard, List, User, Settings, Warning,
-         CheckCircle, XmarkCircle, Clock } from 'iconoir-react';
-
-// All icons accept size and strokeWidth props
-<Plus width={16} height={16} strokeWidth={2} />
-<Search width={16} height={16} strokeWidth={1.5} />
+import { Plus, Trash, EditPencil, Search, SunLight,
+         HalfMoon, Dashboard, List, User, Settings,
+         WarningTriangle, CheckCircle, XmarkCircle,
+         Clock, Spark, Brain, Calendar } from 'iconoir-react';
 ```
-
-Recommended icon set per UI region:
-
-| Context | Icon | Usage |
-|---|---|---|
-| Create / Add | `Plus` | Primary action buttons |
-| Delete | `Trash` | Destructive actions |
-| Edit | `EditPencil` | Row actions |
-| Search | `Search` | Search inputs |
-| Light mode | `SunLight` | ModeToggle |
-| Dark mode | `HalfMoon` | ModeToggle |
-| Dashboard | `Dashboard` | Nav item |
-| List view | `List` | Nav item |
-| User / Profile | `User` | Nav item |
-| Settings | `Settings` | Nav item |
-| Warning | `WarningTriangle` | Error states |
-| Success | `CheckCircle` | Confirmation states |
-| Error | `XmarkCircle` | Failure states |
-| Pending | `Clock` | In-progress states |
-| Close / Dismiss | `Xmark` | Modals, toasts |
-| Chevron right | `NavArrowRight` | List rows, breadcrumbs |
-| Sort | `Sort` | Table headers |
-| Filter | `Filter` | List toolbars |
-| Refresh | `RefreshDouble` | Retry / reload |
 
 Rules:
 - Default strokeWidth: 1.5 for UI, 2 for emphasis
@@ -309,7 +280,8 @@ const STATUS_MAP = {
   active:'success', paid:'success', completed:'success',
   pending:'warning', draft:'warning', review:'warning',
   overdue:'coral', cancelled:'muted', inactive:'muted',
-  open:'info', critical:'coral',
+  open:'info', critical:'coral', queued:'info',
+  suggested:'cyan', blocked:'warning'
 };
 
 const BADGE_STYLES = {
@@ -484,108 +456,69 @@ export function onCardHoverEnd(e) {
 }
 ```
 
-### Chart components (Recharts)
+### PlanStrip.jsx
 
 ```jsx
-import { ResponsiveContainer, AreaChart, Area, BarChart, Bar,
-         LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-
-export const CHART_COLORS = ['var(--accent)','var(--accent2)','var(--success)','var(--warning)'];
-
-export const axisProps = { tick:{fill:'var(--text-subtle)',fontSize:11},
-  tickLine:false, axisLine:false };
-export const gridProps = { strokeDasharray:'3 3', stroke:'var(--border)', vertical:false };
-
-export function ChartTooltip({ active, payload, label, formatter }) {
-  if (!active || !payload?.length) return null;
+export function PlanStrip({ title, subtitle, actions }) {
   return (
-    <div style={{ background:'var(--surface-solid)', border:'1px solid var(--border-strong)',
-      borderRadius:'var(--radius-md)', padding:'10px 14px',
-      fontSize:'var(--text-xs)', boxShadow:'var(--shadow-sm)' }}>
-      {label && <div style={{ fontSize:11, color:'var(--text-muted)',
-        marginBottom:'var(--space-2)', fontWeight:600, lineHeight:1.3 }}>{label}</div>}
-      {payload.map((p, i) => (
-        <div key={i} style={{ display:'flex', alignItems:'center',
-          gap:'var(--space-2)', marginBottom:i < payload.length-1 ? 4 : 0 }}>
-          <span style={{ width:8, height:8, borderRadius:'50%', background:p.color }} />
-          <span style={{ color:'var(--text-muted)' }}>{p.name}:</span>
-          <span style={{ fontWeight:600, color:'var(--text)' }}>
-            {formatter ? formatter(p.value) : p.value}
-          </span>
+    <div style={{
+      display:'flex', alignItems:'center', justifyContent:'space-between', gap:'var(--space-4)',
+      padding:'var(--space-5)', border:'1px solid var(--border-strong)',
+      background:'linear-gradient(135deg, var(--accent-dim), transparent 70%)',
+      borderRadius:'var(--radius-xl)', backdropFilter:'blur(var(--blur-md))',
+      WebkitBackdropFilter:'blur(var(--blur-md))'
+    }}>
+      <div>
+        <div style={{ fontSize:11, fontWeight:700, color:'var(--text-subtle)',
+          textTransform:'uppercase', letterSpacing:'var(--tracking-label)', marginBottom:'var(--space-2)' }}>
+          Today’s draft plan
         </div>
-      ))}
-    </div>
-  );
-}
-
-export function ChartContainer({ title, subtitle, height=220, level=1, children }) {
-  const cardStyle = getGlassCardStyle(level);
-  return (
-    <div style={{ ...cardStyle, padding:'var(--space-5) var(--space-4) var(--space-3)' }}>
-      {title && (
-        <div style={{ marginBottom:'var(--space-3)' }}>
-          <div style={{ fontFamily:'var(--font-display)', fontSize:'var(--text-xl)',
-            lineHeight:1.2, color:'var(--text)', marginBottom:2 }}>{title}</div>
-          {subtitle && <div style={{ fontSize:'var(--text-xs)', color:'var(--text-muted)',
-            lineHeight:1.5 }}>{subtitle}</div>}
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'var(--text-2xl)', lineHeight:1.1 }}>
+          {title}
         </div>
-      )}
-      <ResponsiveContainer width="100%" height={height}>{children}</ResponsiveContainer>
+        {subtitle && <div style={{ marginTop:'var(--space-2)', color:'var(--text-muted)' }}>{subtitle}</div>}
+      </div>
+      {actions && <div style={{ display:'flex', gap:'var(--space-2)', flexWrap:'wrap' }}>{actions}</div>}
     </div>
   );
 }
 ```
 
-### NavItem.jsx
+### DecisionRail.jsx
 
 ```jsx
-// Import icons: import { Dashboard, List, User, Settings } from 'iconoir-react';
-export function NavItem({ icon, label, active, onClick, badge }) {
+export function DecisionRail({ title, children, footer }) {
   return (
-    <button onClick={onClick} style={{
-      display:'flex', alignItems:'center', justifyContent:'space-between',
-      width:'100%', padding:'10px 12px', borderRadius:'var(--radius)',
-      border:'none', textAlign:'left',
-      background:active ? 'var(--accent-dim)' : 'transparent',
-      color:active ? 'var(--accent)' : 'var(--text-muted)',
-      fontSize:'var(--text-sm)', fontWeight:active ? 600 : 500, lineHeight:1.4,
-      transition:'background var(--transition-fast), color var(--transition-fast)',
-    }}
-    onMouseEnter={e => { if (!active) {
-      e.currentTarget.style.background='var(--surface-hover)';
-      e.currentTarget.style.color='var(--text)';
-    }}}
-    onMouseLeave={e => { if (!active) {
-      e.currentTarget.style.background='transparent';
-      e.currentTarget.style.color='var(--text-muted)';
-    }}}>
-      <span style={{ display:'flex', alignItems:'center', gap:'var(--space-3)' }}>
-        <span style={{ display:'inline-flex', alignItems:'center',
-          justifyContent:'center', width:16, height:16, flexShrink:0 }}>
-          {icon}
-        </span>
-        {label}
-      </span>
-      {badge != null && (
-        <span style={{ fontSize:10, fontWeight:700, lineHeight:1, padding:'2px 6px',
-          background:'var(--accent-dim)', color:'var(--accent)',
-          borderRadius:'var(--radius-full)' }}>{badge}</span>
-      )}
-    </button>
+    <aside style={{
+      background:'var(--surface)', border:'1px solid var(--border)',
+      borderRadius:'var(--radius-2xl)', padding:'var(--space-5)',
+      backdropFilter:'blur(var(--blur-md))', WebkitBackdropFilter:'blur(var(--blur-md))',
+      display:'flex', flexDirection:'column', gap:'var(--space-4)'
+    }}>
+      <div>
+        <div style={{ fontSize:11, fontWeight:700, color:'var(--text-subtle)',
+          textTransform:'uppercase', letterSpacing:'var(--tracking-label)', marginBottom:'var(--space-2)' }}>
+          AI decision rail
+        </div>
+        <div style={{ fontFamily:'var(--font-display)', fontSize:'var(--text-xl)', lineHeight:1.2 }}>
+          {title}
+        </div>
+      </div>
+      <div style={{ display:'flex', flexDirection:'column', gap:'var(--space-4)' }}>{children}</div>
+      {footer && <div>{footer}</div>}
+    </aside>
   );
 }
 ```
 
----
-
-## 8. ModeToggle.jsx
+### ModeToggle.jsx
 
 ```jsx
 import { useEffect, useState } from 'react';
 import { SunLight, HalfMoon } from 'iconoir-react';
 
-export function ModeToggle() {
-  const [mode, setMode] = useState(() => localStorage.getItem('ralph-theme') || 'dark');
+export function ModeToggle({ defaultMode = 'light' }) {
+  const [mode, setMode] = useState(() => localStorage.getItem('ralph-theme') || defaultMode);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', mode);
@@ -629,17 +562,27 @@ export function ModeToggle() {
 
 ---
 
+## 8. ModeToggle
+
+Use `ModeToggle` everywhere theme switching appears. The **default** passed into it must come from Phase 3 / `spec/spec.md`, not personal habit.
+
+**Before first paint** in `main.jsx`:
+- read the chosen default from spec-driven code/config
+- check `localStorage.getItem('ralph-theme')`
+- set `document.documentElement.setAttribute('data-theme', stored || defaultTheme)`
+- then render the app
+
+---
+
 ## 9. AI-Native Patterns
 
-**Product rule (from SKILL.md):** If the factory marked **`AI_NATIVE: YES`**, the UI must prove the assistive loop — draft review, suggestion accept/reject, scheduling confirm, or equivalent — on real components, not only KPI cards and sortable tables. Stubs are fine for the model (fake latency, static sample copy) as long as **user controls commit state** (send, queue, dismiss, snooze) and **§9 primitives** are used instead of blocking spinners.
+**Product rule:** if the factory marked **`AI_NATIVE: YES`**, the UI must prove the assistive loop — draft review, suggestion accept/reject, planning confirm/reject, scheduling confirm, or equivalent — on real components, not only KPI cards and sortable tables. Stubs are fine for the model as long as **user controls commit state** and **§9 primitives** are used instead of blocking spinners.
 
 Apply based on the AI-UX mode from Phase 3:
-- `AMBIENT` (default) — skeleton loaders, optimistic updates, smart empty states, ambient indicator
+- `AMBIENT` — skeleton loaders, optimistic updates, smart empty states, ambient indicator, planning strip or suggestion rail
 - `CONVERSATIONAL` — add streaming text and typing indicator
 
 ### SkeletonLoader.jsx
-
-Replaces every spinner. Shape mirrors the content that is loading so the user knows what is coming.
 
 ```jsx
 export function SkeletonRow({ cols = 4 }) {
@@ -693,8 +636,6 @@ export function SkeletonCard() {
 
 ### useOptimisticList.js
 
-List items appear instantly on POST. Roll back gracefully on error. No waiting for the round trip.
-
 ```js
 import { useState, useCallback } from 'react';
 
@@ -702,7 +643,6 @@ export function useOptimisticList(initialItems = []) {
   const [items, setItems] = useState(initialItems);
 
   const addOptimistic = useCallback(async (newItem, saveFn) => {
-    // Generate a temporary ID so the item can be found and replaced/removed
     const tempId = `temp-${Date.now()}`;
     const optimistic = { ...newItem, id: tempId, _saving: true };
 
@@ -710,25 +650,21 @@ export function useOptimisticList(initialItems = []) {
 
     try {
       const saved = await saveFn(newItem);
-      // Replace the optimistic item with the real saved record
       setItems(prev => prev.map(item => item.id === tempId ? saved : item));
       return saved;
     } catch (err) {
-      // Roll back — remove the optimistic item
       setItems(prev => prev.filter(item => item.id !== tempId));
       throw err;
     }
   }, []);
 
   const removeOptimistic = useCallback(async (id, deleteFn) => {
-    // Mark as deleting for UI feedback
     setItems(prev => prev.map(item => item.id === id ? { ...item, _deleting: true } : item));
 
     try {
       await deleteFn(id);
       setItems(prev => prev.filter(item => item.id !== id));
     } catch (err) {
-      // Roll back the deletion
       setItems(prev => prev.map(item => item.id === id ? { ...item, _deleting: false } : item));
       throw err;
     }
@@ -740,15 +676,12 @@ export function useOptimisticList(initialItems = []) {
 
 ### SmartEmptyState.jsx
 
-Reads context and suggests the first real action. Uses the entity name as placeholder text.
-
 ```jsx
 import { Plus } from 'iconoir-react';
 
-export function SmartEmptyState({ entity, onAdd, exampleName }) {
-  // entity: e.g. "invoice", exampleName: e.g. first client name from seed data
+export function SmartEmptyState({ entity, onAdd, exampleName, suggestion }) {
   const label = entity.charAt(0).toUpperCase() + entity.slice(1);
-  const suggestion = exampleName ? `Create one for ${exampleName}?` : `Create your first ${entity}.`;
+  const helper = suggestion || (exampleName ? `Create one for ${exampleName}?` : `Create your first ${entity}.`);
 
   return (
     <div style={{ display:'flex', flexDirection:'column', alignItems:'center',
@@ -761,7 +694,7 @@ export function SmartEmptyState({ entity, onAdd, exampleName }) {
       </div>
       <div style={{ fontSize:'var(--text-sm)', color:'var(--text-subtle)',
         maxWidth:300, lineHeight:1.6 }}>
-        {suggestion}
+        {helper}
       </div>
       {onAdd && (
         <button onClick={onAdd} style={{
@@ -780,8 +713,6 @@ export function SmartEmptyState({ entity, onAdd, exampleName }) {
 ```
 
 ### AmbientIndicator.jsx
-
-Subtle pulse in the nav when background work is in flight. Not a blocking spinner. Not a modal.
 
 ```jsx
 export function AmbientIndicator({ active, label = 'Saving…' }) {
@@ -804,9 +735,7 @@ export function AmbientIndicator({ active, label = 'Saving…' }) {
 }
 ```
 
-### StreamingText.jsx (CONVERSATIONAL mode only)
-
-Text renders word by word — not dumped all at once.
+### StreamingText.jsx
 
 ```jsx
 import { useState, useEffect } from 'react';
@@ -847,9 +776,7 @@ export function StreamingText({ text, speed = 18, onComplete }) {
 }
 ```
 
-### TypingIndicator.jsx (CONVERSATIONAL mode only)
-
-Three-dot pulse while waiting for a response.
+### TypingIndicator.jsx
 
 ```jsx
 export function TypingIndicator() {
@@ -872,10 +799,37 @@ export function TypingIndicator() {
 
 ---
 
+## 10. Theme-default guidance
+
+This design system supports both light and dark equally. It does **not** declare one universal default.
+
+Use this rule:
+- set the default theme in Phase 3 based on product type
+- apply it before first paint in `main.jsx`
+- persist the user’s choice in local storage thereafter
+
+### Practical guidance
+
+Choose **light-default** when you want:
+- paper-like clarity
+- daytime productivity feel
+- reading-heavy comfort
+- softer cognitive load
+
+Choose **dark-default** when you want:
+- control-room intensity
+- ambient focus
+- cinematic contrast
+- strong screen glow / monitoring metaphor
+
+Do not let the model default to dark because it is fashionable.
+
+---
+
 ## Usage Principles
 
 ### Composition (with Anti-Generic UI)
-- Read **`references/ANTI_GENERIC_UI.md`** when shaping pages: explicit regions, screen `idea:`, signature moment, and a implementable `WEIRD_HOOK`. Tokens and components below stay Eclipse unless that doc targets structure only.
+- Read **`references/ANTI_GENERIC_UI.md`** when shaping pages: explicit regions, screen `idea:`, signature moment, implementable `WEIRD_HOOK`, experience polish, and default-theme policy.
 
 ### Accent usage
 - Use coral for primary CTA, active nav, selected states, and key KPI emphasis.
@@ -899,10 +853,10 @@ export function TypingIndicator() {
 - Do not apply the heaviest blur to every component
 
 ### AI-UX usage
-- AMBIENT: always use SkeletonLoader, useOptimisticList, SmartEmptyState, AmbientIndicator
+- AMBIENT: always use SkeletonLoader, useOptimisticList, SmartEmptyState, AmbientIndicator, and at least one visible planning/suggestion surface
 - CONVERSATIONAL: add StreamingText, TypingIndicator to any AI response surface
 - Never use a blocking spinner for data fetching — always skeleton instead
 
 ---
 
-*v1.0.0 · Swami Chandrasekaran*
+*v2.0.0 · Swami Chandrasekaran*

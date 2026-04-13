@@ -13,7 +13,7 @@ description: >
   Use aggressively — when in doubt, trigger.
 ---
 
-# Ralph Wiggum Loop — Software Factory v7.3
+# Ralph Wiggum Loop — Software Factory v8.0
 
 Triggers: /factory · hey Ralph · build me an app · factory mode
 
@@ -41,9 +41,37 @@ Models **default** to a “safe” shell: light gray canvas, white rounded shado
 1. **Files must be read, not assumed.** Before emitting the Phase 3 block **or** writing **any** Phase 7B client file, load **`references/ANTI_GENERIC_UI.md`** and **`references/DESIGN_SYSTEM.md`** from the same folder as this `SKILL.md` (tool read or @-path). Guessing tokens from memory **does not** satisfy the contract.
 2. **Phase 3 gate:** If `DESIGN_INTENT`, `LAYOUT_SPEC`, `INSPIRATION` (3), `WEIRD_HOOK`, `SIGNATURE_MOMENT`, and per-screen `idea:` are missing — **rewrite Phase 3** before Phase 4.
 3. **Phase 7B gate:** The visible shell must implement Phase 3’s `LAYOUT_SPEC` and `WEIRD_HOOK`. **Do not** paste component demos as the whole product layout.
-4. **Theme default:** **`data-theme="dark"`** before first paint (`main.jsx` + Eclipse body from DESIGN_SYSTEM §2). The factory **does not** ship a light-gray page + white card grid as the **default** experience. Light mode exists only via **ModeToggle**.
+4. **Theme default:** Theme default is chosen in **Phase 3** and mounted before first paint in `main.jsx`. Productivity, planning, writing, consumer utility, and collaboration apps default to **light** unless Phase 3 explicitly justifies dark as the more credible first experience.
+5. **Experience bar:** “Works” is not enough. The built shell must feel like a coherent product point of view, not a checklist fulfillment. Sparse, broken, placeholder-feeling, or under-resolved layouts are contract drift.
 
 **Rejected shell (tripwire — rework if matched):** pale `#f5f5f5`-style workspace; main area = **even grid** of similar white cards with large radius + soft shadow; optional dark **left nav**; content = KPI mini-cards + chart cards only; Instrument Serif / display type unused; no asymmetric region, no overlap, no `WEIRD_HOOK`. This matches generic “usage / tokenomics / analytics” templates.
+
+## PRODUCT INVENTION CONTRACT (NEW HARD RULE)
+
+A competent factory does more than restate the prompt. For any greenfield `/factory` run, Phase 1 and Phase 2 must behave like a brilliant PM and architect pair who are willing to go **one layer beyond the obvious** while staying disciplined.
+
+Required behavior:
+
+1. Generate the direct interpretation of the idea.
+2. Generate **5 adjacent-but-credible product moves** a top-tier PM would consider.
+3. Promote **1–2** of those moves into the MVP **only if** they sharpen the core JTBD without introducing platform sprawl.
+4. Do **not** add novelty that is decorative, sci-fi nonsense, or disconnected from the user’s job.
+5. For future-facing prompts (for example: “2050 version”, “next-gen”, “AI-native”), treat the concept as permission to rethink interaction primitives, recommendation quality, system initiative, and planning intelligence — not permission to add random gimmicks.
+
+Examples of strong adjacent moves:
+- compression of vague input into executable next steps
+- recommendation of priorities, schedules, or sequencing
+- simulation of tradeoffs (“if you do X, Y slips”)
+- ambient detection of blockers, drift, or stale work
+- AI-drafted follow-ups, summaries, or delegation suggestions
+
+Examples of weak adjacent moves:
+- random social feed
+- metaverse gimmicks
+- crypto layer with no JTBD reason
+- decorative AI chat window with no user control path
+
+If the resulting MVP feels like a plain CRUD app with a future-sounding subtitle, stop and strengthen Phases 1–3 before continuing.
 
 ## INSTALL LOCATION & PATH CONTRACT
 
@@ -143,13 +171,11 @@ Emit once in Phase 0 (after DOMAIN line):
 FACTORY_MODE: [fast | normal | advanced]
 ```
 
-
 | Mode         | Scope (Phases 1–3)                                                                                                                                                                                          | Spec / build behavior                                                                                                                                                                                                                                                                                                                                                                                             |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **fast**     | Max **3** MVP features (Phase 1). Max **2** entities (Phase 2). Max **3** screens (Phase 3). CHARTS default **NO** unless the idea is explicitly analytics. Seed: **12–18** records per entity (not 15–25). | Shorter spec sections allowed; same file contracts. Prefer fewer components.                                                                                                                                                                                                                                                                                                                                      |
+| **fast**     | Max **3** MVP features (Phase 1). Max **2** entities (Phase 2). Max **3** screens (Phase 3). CHARTS default **NO** unless the idea is explicitly analytics. Seed: **12–18** records per entity (not 15–25). | Shorter spec sections allowed; same file contracts. Prefer fewer components. Still include at least one adjacent-but-credible PM move when it materially improves the JTBD.                                                                                                                                                                                                                                   |
 | **normal**   | Current limits: MVP ≤5, entities and screens per existing phase rules, CHARTS per Phase 2.                                                                                                                  | Default behavior everywhere else in this skill.                                                                                                                                                                                                                                                                                                                                                                   |
 | **advanced** | Same caps as **normal** (do not bloat entities/screens by default).                                                                                                                                         | In **spec/spec.md**, add sections **## Assumptions** and **## Risks & edge cases** (concrete bullets). Phase 8: at least **4** FINDING lines (severity can include INFO). In **FINAL OUTPUT** and at the Phase 7A gate: if shell commands are available, run `npm test` after server is up and report pass/fail counts; if commands are unavailable, state that explicitly. Never imply tests passed without evidence. |
-
 
 **Anti-rationalization:** "Fast mode" does **not** mean merge tests with implementation, skip health check, or skip the security block.
 
@@ -162,7 +188,6 @@ FACTORY_MODE: [fast | normal | advanced]
 One skill, many entry points. Full factory is `/factory`; use partial triggers only when the table matches your situation.
 
 Optional flags (combine with `/factory`): `--review` · `--mode fast|normal|advanced` · `--fast` · `--advanced`
-
 
 | Trigger                    | Phases                | Needs in repo                                  |
 | -------------------------- | --------------------- | ---------------------------------------------- |
@@ -178,7 +203,6 @@ Optional flags (combine with `/factory`): `--review` · `--mode fast|normal|adva
 | `/security`                | 8                     | spec/spec.md, constitution.md + existing codebase |
 | `/continue`                | resume 7A or 7B       | spec/tasks.md (sleepy message helpful but optional) |
 
-
 Partial runs: read every **Needs** file first. Do not invent scope; derive from `spec/spec.md` and `spec/tasks.md`.
 
 ---
@@ -187,33 +211,34 @@ Partial runs: read every **Needs** file first. Do not invent scope; derive from 
 
 **Verification (non-negotiable)**
 
-
 | Milestone      | Evidence before leaving                                                             |
 | -------------- | ----------------------------------------------------------------------------------- |
-| After Phase 4  | `spec/spec.md` exists on disk; sections match Phases 1–3 (including **## Design** with palette, layout, and anti-generic summary when Phase 3 emitted those blocks) |
+| After Phase 4  | `spec/spec.md` exists on disk; sections match Phases 1–3 (including **## Design** with palette, layout, theme default, and anti-generic summary when Phase 3 emitted those blocks) |
 | After Phase 5  | `spec/tasks.md` exists; task count matches scope formula; server block before client block |
 | After Phase 6  | tests/api.test.js and tests/seed.test.js on disk; entities/routes match spec        |
 | After Phase 7A | `npm run dev:server` + GET /api/health → `{ "status": "ok" }`                       |
-| After Phase 7B | Client files complete per `spec/tasks.md`; no hardcoded hex; at least one entity has full UI CRUD wired; mutation flows expose loading/success/error states; **dark default** + shell not matching **Rejected shell** / **UI CONTRACT — ANTI-GENERIC** |
-| After Phase 8  | Verdict line present: SHIP | SHIP_WITH_NOTES | DO_NOT_SHIP                          |
+| After Phase 7B | Client files complete per `spec/tasks.md`; no hardcoded hex; at least one entity has full UI CRUD wired; mutation flows expose loading/success/error states; default theme mounted before paint; shell does not match **Rejected shell** / **UI CONTRACT — ANTI-GENERIC** |
+| After Phase 8  | Verdict line present: SHIP \| SHIP_WITH_NOTES \| DO_NOT_SHIP                          |
 
 **Interaction minimum (non-negotiable)**
 
 - No read-only dashboard acceptance. At least one core entity must support full UI create/edit/delete in Phase 7B.
 - Every in-scope screen must include at least one user-triggered mutation (form submit, inline edit, status update, bulk action, or AI-assisted action).
 - UI must expose loading, success, and error feedback states for at least one mutation flow.
-- When Phase 0 **`AI_NATIVE: YES`**, the app must **not** be “metrics + tables only.” The user must **see** the AI value: at least **two** distinct UI affordances across the app such as: draft preview with **Accept / Reject / Edit & send**, regeneration or “try another tone,” scheduling suggestion with **confirm/snooze**, queue of items awaiting review, or a focused “work this lead” panel. **Backend may stub** (timeout → fake body, static sample text, client-only state) but **controls and state transitions must be real** — not lorem tooltips on a chart.
+- When Phase 0 **`AI_NATIVE: YES`**, the app must **not** be “metrics + tables only.” The user must **see** the AI value: at least **two** distinct UI affordances across the app such as: draft preview with **Accept / Reject / Edit & send**, regeneration or “try another version,” schedule suggestion with **confirm/snooze**, queue of items awaiting review, proactive “what should I do next?” panel, or focused “work this item” panel. **Backend may stub** (timeout → fake body, static sample text, client-only state) but **controls and state transitions must be real** — not lorem tooltips on a chart.
 - **`AI-UX` discipline when `AI_NATIVE: YES`:** Phase 3 must **not** emit `AI-UX: NONE`. Use **`AMBIENT`** minimum; use **`CONVERSATIONAL`** when the user reads generated text as it arrives. Apply `references/DESIGN_SYSTEM.md` §9 (skeleton, optimistic patterns, streaming/typing when conversational).
 - **Anti-generic UI:** Phase 3 and Phase 7B must follow `references/ANTI_GENERIC_UI.md` — explicit `LAYOUT_SPEC`, per-screen `idea:`, `SIGNATURE_MOMENT`, `WEIRD_HOOK`, and `INSPIRATION` (three named references). Card-grid or “KPI row + table only” shells without transformation are non-compliant (see tripwires).
+- **No fake futurism:** when the user asks for “future”, “2050”, or equivalent, the UI must express changed workflow logic, not just changed copywriting or glossy visuals.
 
 **AI-native product bar (when `AI_NATIVE: YES`)**
 
 - Forward-looking beats pretty emptiness: if full ML is out of scope, still ship **credible UX** — e.g. simulated generation delay + skeleton, then populated draft; “Connect API key” placeholder only **after** the review/send path exists.
-- The **primary JTBD screen** (e.g. follow-ups, drafts, outreach) must host the AI workflow, not a secondary route buried behind stats.
-
+- The **primary JTBD screen** (e.g. plan, drafts, execution queue, follow-ups) must host the AI workflow, not a secondary route buried behind stats.
+- At least **one** AI action must change record state or record ordering.
+- At least **one** AI action must support **Accept + Reject** or **Edit + Commit**.
+- A floating “AI assistant” bubble alone is non-compliant.
 
 **Anti-rationalization**
-
 
 | Excuse                                                 | Rebuttal                                                                               |
 | ------------------------------------------------------ | -------------------------------------------------------------------------------------- |
@@ -226,13 +251,15 @@ Partial runs: read every **Needs** file first. Do not invent scope; derive from 
 | Spec is close enough — skip writing spec/spec.md       | `spec/spec.md` is the source of truth for humans and `/retask` / `/rebuild`. File required. |
 | I'll use Next.js/create-next-app/scaffolders for speed | Off-contract stack drift. Keep stack lock and continue canonical phases.               |
 | For an AI product, a dashboard alone is enough; AI can be “future work” | **`AI_NATIVE: YES`** requires visible draft/suggestion/review surfaces now. Stub the model; do not stub the user’s control path. |
-
+| The prompt was simple, so obvious CRUD is fine         | The **PRODUCT INVENTION CONTRACT** requires one layer of adjacent, credible thinking beyond the obvious. |
 
 **Red flags**
 
 - Phase 7B starts before health check passes → stop; fix 7A first.
 - Task count does not match the Phase 5 scope formula, or tasks are not ordered T01… → fix `spec/tasks.md`.
 - Security verdict missing or only "looks good" prose → emit the Phase 8 block properly.
+- Phase 0 implies AI-native or future-facing behavior, but MVP remains ordinary CRUD with cosmetic AI language → strengthen Phases 1–3.
+- Theme default is chosen arbitrarily instead of being justified by the app type → fix Phase 3.
 
 **Non-compliance tripwire (hard stop + self-correct)**
 
@@ -244,8 +271,9 @@ If any of these appear, stop immediately and self-correct before continuing:
 - Any statement that phases will be merged, reordered, or skipped.
 - Client output is only cards/tables/charts with no mutation flows (read-only report UI).
 - Client matches the **generic SaaS template** tripwire: symmetrical card grid + generic hero as the only layout idea, no `LAYOUT_SPEC` / `SIGNATURE_MOMENT` from Phase 3, or Phase 3 omitted Anti-Generic blocks — treat as contract drift; revise Phase 3 (or `/redesign`) then rebuild client.
-- Client matches **Rejected shell** in **UI CONTRACT — ANTI-GENERIC** (light gray default workspace + uniform white shadow card grid + KPI/chart-only main, or light-only theme with no Eclipse dark default) — tripwire; revise Phase 3 + 7B.
-- Phase 0 **`AI_NATIVE: YES`** but the client has no dedicated surface where the user reviews, edits, accepts, or rejects AI-produced or AI-assisted content (or equivalent scheduling/suggestion confirmation flow) — stats-only or list-only is non-compliant.
+- Client matches **Rejected shell** in **UI CONTRACT — ANTI-GENERIC**.
+- Phase 0 **`AI_NATIVE: YES`** but the client has no dedicated surface where the user reviews, edits, accepts, or rejects AI-produced or AI-assisted content (or equivalent planning/suggestion confirmation flow) — stats-only or list-only is non-compliant.
+- The built experience feels sparse, under-resolved, or like placeholder scaffolding instead of a designed product shell.
 
 When tripwire is triggered, emit exactly:
 
@@ -262,13 +290,11 @@ Then continue from the correct phase with required block/file outputs.
 
 Do not claim tests pass, build succeeds, or factory is complete without **fresh** evidence when your environment can run commands.
 
-
 | Before claiming | Do this                                                                                             |
 | --------------- | --------------------------------------------------------------------------------------------------- |
 | Tests pass      | Run `npm test` (with `npm run dev:server` if API tests need it). Quote failure count or "0 failed". |
 | Server healthy  | Run health check after the latest 7A edits.                                                         |
 | Work complete   | Align with the milestone table above.                                                               |
-
 
 If you cannot execute commands, state that limitation — do not use "should pass", "looks good", or "done" as substitutes for output.
 
@@ -324,11 +350,21 @@ Emit this block only. No prose. Max 5 MVP features — cut ruthlessly (**fast** 
 JOBS must be verb phrases: "track invoices by client" not "invoicing".
 If Phase 0 **`AI_NATIVE: YES`**, at least **one** MVP feature must name a **user-visible** AI-assisted moment (e.g. “review and send AI-drafted follow-up”, “accept or rewrite suggested message”) — not only “dashboard of leads.”
 
+Before emitting the final Phase 1 block, do this internally:
+- Generate the obvious product interpretation.
+- Generate **5 adjacent-but-credible product moves**.
+- Choose **1–2** that most improve the JTBD without bloating scope.
+- Reflect those promoted moves inside MVP, PROBLEM framing, or JOBS.
+
+For future-facing prompts, at least one promoted move should reflect changed system initiative, better planning intelligence, or compression of complexity.
+
 ```
 PRODUCT: [name]
 PROBLEM: [1 sentence]
 USER:    [job title + context]
 JOBS:    [verb + object] | [verb + object] | [verb + object]
+ADJACENT MOVES CONSIDERED: [move 1] / [move 2] / [move 3] / [move 4] / [move 5]
+PROMOTED MOVES: [move a] / [move b or NONE]
 MVP:     [f1] / [f2] / [f3] / [f4] / [f5]
 CUT:     [thing 1] / [thing 2]
 WIN:     [1 measurable outcome]
@@ -343,6 +379,11 @@ Define the full-stack shape.
 
 **fast** mode: at most **2** entities. Prefer **CHARTS: NO** unless the product is explicitly chart-centric.
 
+Before emitting the block, do this internally:
+- Include one **anticipatory** behavior, one **recommendation** behavior, and one **compression** behavior where appropriate for the domain.
+- Keep them scoped to the locked stack.
+- If `AI_NATIVE: YES`, ensure the architecture supports visible AI flows even when model behavior is stubbed.
+
 ```
 STACK:    React 18 + Vite + Tailwind | Express + Node | SQLite (libsql) | auth: none
 ENTITIES:
@@ -354,7 +395,9 @@ ROUTES:
   POST   /api/[entity]        create
   PUT    /api/[entity]/:id    update
   DELETE /api/[entity]/:id    delete
+  POST   /api/[entity]/[ai-action]   stubbed AI action with real state transition   (when AI_NATIVE: YES or materially useful)
 CHARTS: [YES — area/bar/line/pie · time-series/categorical | NO]
+SYSTEM BEHAVIORS: anticipatory=[one] | recommendation=[one] | compression=[one]
 OUTPUT: see references/STACK.md for folder structure
 ```
 
@@ -365,6 +408,10 @@ OUTPUT: see references/STACK.md for folder structure
 Read **`references/DESIGN_SYSTEM.md`** and **`references/ANTI_GENERIC_UI.md`**. Inherit the Ralph Design System for **tokens, components, and §9 primitives**. Inherit Anti-Generic for **layout, metaphor, tension, and rejection of template dashboards** (that file wins on structure when in conflict).
 Override palette/accent only if the domain genuinely calls for it.
 If Phase 0 **`AI_NATIVE: YES`**: **`AI-UX`** must be **`AMBIENT`** or **`CONVERSATIONAL`** (never **`NONE`**). Prefer **`CONVERSATIONAL`** when the user reads generated text. Name screens so the **first** listed screen is where the AI-assisted JTBD happens (draft/review/queue), not only a metrics overview.
+
+**Theme-default rule:** Choose **light-default** for productivity, planning, note-taking, writing, coordination, and consumer utility products unless there is a strong reason dark better supports the metaphor. Choose **dark-default** for control-room, media, security, trading, monitoring, or cinematic environments. State the reason briefly.
+
+**Polish rule:** Design as if a world-class product design team obsessed over flow, hierarchy, and emotional friction removal. Broken-feeling transitions, generic whitespace, or empty heroic emptiness are invalid.
 
 **Forbidden as the only story:** `LAYOUT: dashboard-grid` or `hero: stat-grid` **without** an explicit asymmetric `LAYOUT_SPEC`, `VISUAL_TENSION`, and per-screen `idea:` — generic “rounded cards + KPI row” is a tripwire.
 
@@ -388,7 +435,7 @@ INSPIRATION: [3 named UIs/products/domains — not “modern SaaS” / “clean 
 WEIRD_HOOK: [one implementable memorable element for this app — see ANTI_GENERIC_UI §8]
 
 PALETTE:  Ralph Design System [OR] OVERRIDE: accent=[hex] accent2=[hex] because [reason]
-THEME:    dark-default  ← client must mount with data-theme=dark; ModeToggle switches to light (Eclipse), not a gray analytics template as default
+THEME:    [light-default | dark-default] because [reason]
 LAYOUT:   [structural label — must match LAYOUT_SPEC; e.g. sidebar-nav, split-inspector, single-column-stacked, canvas+rail]
 AI-UX:    [AMBIENT | CONVERSATIONAL | NONE]   ← if AI_NATIVE: YES, forbidden: NONE
 SCREENS (max 4, in build priority order; **fast** mode: max **3**):
@@ -398,7 +445,7 @@ SCREENS (max 4, in build priority order; **fast** mode: max **3**):
 EMPTY STATES: one per data screen
 RESPONSIVE:   640px breakpoint
 INTERACTION:  each screen defines at least one mutation; include one bulk action and one quick action across the app
-AI SURFACES:  if AI_NATIVE: YES — list ≥2 UI areas (e.g. "Draft panel+actions" / "Review queue row actions" / "Schedule suggestion chip") mapping to MVP; stubs OK
+AI SURFACES:  if AI_NATIVE: YES — list ≥2 UI areas (e.g. "Draft panel+actions" / "Review queue row actions" / "Schedule suggestion chip" / "Today plan accept-reject strip") mapping to MVP; stubs OK
 AI ACTIONS:   at least one actionable AI flow (suggestion/copy/draft) with accept + reject or edit-and-commit; if AI_NATIVE: YES, at least one flow must change persisted or queued record state via API or client state wired to API-shaped data
 ```
 
@@ -432,6 +479,12 @@ FILE: spec/spec.md
 ## Jobs To Be Done
 [JOBS from Phase 1, one per line]
 
+## Adjacent Moves Considered
+[ADJACENT MOVES CONSIDERED from Phase 1]
+
+## Promoted Moves
+[PROMOTED MOVES from Phase 1]
+
 ## MVP Scope
 [MVP features from Phase 1]
 
@@ -447,6 +500,9 @@ FILE: spec/spec.md
 ## API Contract
 [ROUTES from Phase 2 — method, path, purpose, request/response shape]
 
+## System Behaviors
+[SYSTEM BEHAVIORS from Phase 2]
+
 ## Screens
 [SCREENS from Phase 3 — name, slug, purpose, primary action, components]
 
@@ -458,7 +514,7 @@ FILE: spec/spec.md
 - If AI_NATIVE (Phase 0): document the ≥2 AI surfaces from Phase 3 and the primary JTBD screen; forbid stats-only MVP
 
 ## Design
-Palette: [PALETTE]  Theme: dark default (ModeToggle)  Layout: [LAYOUT]  Responsive: 640px
+Palette: [PALETTE]  Theme: [THEME]  Layout: [LAYOUT]  Responsive: 640px
 Anti-generic (from Phase 3 — paste or summarize): DESIGN_INTENT, SIGNATURE_MOMENT, VISUAL_TENSION, LAYOUT_SPEC, INSPIRATION (3), WEIRD_HOOK; per-screen `idea:` echoed from ## Screens
 Factory mode: [fast | normal | advanced]
 
@@ -480,7 +536,7 @@ SPEC READY
 
 `spec/spec.md` has been written to your project root.
 
-Read it now. Check that the entities, routes, and screens match your intent.
+Read it now. Check that the entities, routes, screens, promoted moves, and theme default match your intent.
 Edit `spec/spec.md` directly if anything needs changing — no special format required.
 
 When ready:
@@ -520,29 +576,31 @@ FILE: spec/tasks.md
 - [ ] T05 Seed [Entity2] (repeat per entity as needed)
 - [ ] T06 [Entity1] routes: GET list+filter, GET :id, POST, PUT, DELETE
 - [ ] T07 [Entity2] routes: GET list+filter, GET :id, POST, PUT, DELETE (repeat per entity as needed)
-- [ ] T08 server/index.js — helmet, CORS, route mounts, seed on start, error handler
+- [ ] T08 AI action routes / state-transition handlers (when AI_NATIVE: YES or materially useful)
+- [ ] T09 server/index.js — helmet, CORS, route mounts, seed on start, error handler
 
 ## Client (Phase 7B)
-- [ ] T09 client/package.json, vite.config.js, tailwind.config.js, postcss.config.js
-- [ ] T10 client/index.html — Vite entry point
-- [ ] T11 client/src/index.css — Ralph Design System vars and reset
-- [ ] T12 client/src/lib/api.js — fetch helpers per route
-- [ ] T13 Shared components: [list from Phase 3]
-- [ ] T14 Forms + mutation UX primitives (modal/drawer/inline editor), validation errors, success/error toasts
-- [ ] T15 [Screen 1] page — [primary action] + mutation flow
-- [ ] T16 [Screen 2] page — [primary action] + mutation flow
+- [ ] T10 client/package.json, vite.config.js, tailwind.config.js, postcss.config.js
+- [ ] T11 client/index.html — Vite entry point
+- [ ] T12 client/src/index.css — Ralph Design System vars and reset
+- [ ] T13 client/src/lib/api.js — fetch helpers per route
+- [ ] T14 Shared components: [list from Phase 3]
+- [ ] T15 Forms + mutation UX primitives (modal/drawer/inline editor), validation errors, success/error toasts
+- [ ] T16 AI surfaces + accept/reject or edit-and-commit controls from Phase 3
+- [ ] T17 [Screen 1] page — [primary action] + mutation flow
+- [ ] T18 [Screen 2] page — [primary action] + mutation flow
 - [ ] T1N [Screen N] page — [primary action] + mutation flow (insert one task per additional screen; keep numbering contiguous with no gaps)
 - [ ] T[n-1] App.jsx — React Router, nav, ModeToggle (where n is the final task number after all screen-page tasks are listed)
-- [ ] T[n] main.jsx — entry, sets data-theme before render
+- [ ] T[n] main.jsx — entry, sets chosen theme before render
 
 ## Done when
-All tasks checked. npm run dev starts clean. All routes respond. Dark/light toggle works.
+All tasks checked. npm run dev starts clean. All routes respond. Theme default matches spec. Dark/light toggle works.
 ```
 
 Task count follows the scope formula above. Each task maps to one file or one behavior.
 After writing `spec/tasks.md`, verify each client page task uses the exact slug text from Phase 3 (no pluralization/reformatting).
-Also verify tasks include mutation UX implementation (forms/edit/delete) and at least one AI action flow with accept/reject.
-If **`AI_NATIVE: YES`**, include explicit client tasks (under T13 shared components and/or dedicated page tasks) for **each** AI surface named in Phase 3 — e.g. draft review panel, suggestion bar, scheduling confirm — so Phase 7B cannot skip them.
+Also verify tasks include mutation UX implementation and at least one AI action flow with accept/reject.
+If **`AI_NATIVE: YES`**, include explicit client tasks (under T14/T16 shared components and/or dedicated page tasks) for **each** AI surface named in Phase 3.
 
 ---
 
@@ -560,6 +618,7 @@ tests/api.test.js — one describe block per entity:
 - POST /api/[entity] missing required field returns 400
 - PUT /api/[entity]/:id updates and reflects change
 - DELETE /api/[entity]/:id returns 204 and record is gone
+- AI action route returns a structured state transition or suggestion payload when in scope
 
 tests/seed.test.js — one test per JOB:
 
@@ -569,6 +628,7 @@ tests/seed.test.js — one test per JOB:
 - Status values within valid enum
 - Date range spans at least 12 months
 - One assertion per JOB tied to actual field values in the data
+- Where promoted moves imply recommendation, compression, or AI review state, assert corresponding fields or seeded examples exist
 
 Tests reference actual entity names, field names, and counts from spec artifacts (Phases 1-3 outputs).
 They will fail until Phase 7A builds the server. That is correct.
@@ -595,8 +655,9 @@ Files to write, in this order:
 6. server/db/schema.js — SQLite tables matching Phase 2 entities exactly
 7. server/db/seed.js — mode-based counts (**normal/advanced: 15-25**, **fast: 12-18**) per entity, realistic, varied, no lorem ipsum
 8. server/routes/[entity].js — one file per entity, all 5 CRUD routes
-9. server/index.js — helmet, CORS, route mounts, global error handler last.
-  Call initDb() before seedDb() — schema must exist before seed runs.
+9. server/routes/[ai-action].js or inline entity AI-action handlers when specified
+10. server/index.js — helmet, CORS, route mounts, global error handler last.
+   Call initDb() before seedDb() — schema must exist before seed runs.
    Order: initDb() → seedDb() → app.listen()
 
 After writing server/index.js:
@@ -615,6 +676,7 @@ constitution.md format:
 FILE: constitution.md
 
 # [Product Name] — Constitution
+_Last updated: [date] · Ralph Wiggum Loop v8.0_
 
 ## Stack
 - Frontend: React 18 + Vite + Tailwind CSS
@@ -629,19 +691,22 @@ FILE: constitution.md
 - API routes validate required fields and return correct HTTP status codes.
 - Parameterised queries only. No string SQL concatenation.
 - React Router paths match `spec/spec.md` slugs exactly.
+- AI action routes may stub generation, but state transitions and response shapes must be real.
 
 ## Data Principles
 - Seed data is realistic. No lorem ipsum, no "Item 1", no "$0.00".
 - Status fields use the enum defined in `spec/spec.md`.
 - Dates span at least 12 months. Mix of past and future.
+- Recommendation / review / queue state fields required by spec must be seeded meaningfully.
 - CORS defaults to localhost:5173 only. Expand allowed origins before staging/production deploys.
 
 ## Design Principles
 - Ralph Design System (Eclipse Edition) + Anti-Generic UI contract. Read references/DESIGN_SYSTEM.md and references/ANTI_GENERIC_UI.md before writing UI; implement Phase 3 LAYOUT_SPEC, ideas, and WEIRD_HOOK in layout — not token-violating card grids alone.
-- Dark mode is default. ModeToggle always present in nav.
+- Theme default follows `spec/spec.md` **## Design**. ModeToggle always present in nav.
 - Every data screen has an empty state.
 - Every list has a live search filter.
 - Responsive at 640px. Nothing overflows.
+- AI-native apps surface real accept/reject or edit-and-commit controls above the fold on the primary JTBD screen.
 
 ## What Never Ships
 - Hardcoded API keys or secrets
@@ -656,6 +721,7 @@ Seed data rules:
 - Realistic names, varied amounts, mixed statuses.
 - Dates span last 18 months. Include 1-2 edge cases per entity.
 - MEDICAL/FINANCIAL/LEGAL: fictional names only.
+- If AI/recommendation behavior is in scope, include believable seeded review states, confidence flags, suggested actions, or queue examples.
 
 DEFERRED — only for OAuth, payments, email, file uploads, websockets:
 
@@ -676,7 +742,7 @@ file cleanly (close brackets/tags), then emit this message exactly — never sto
 Ralph got sleepy mid-build. The computer needed a nap.
 
 Last completed:  [filename just written, e.g. server/routes/invoices.js]
-Next up:         [next task from spec/tasks.md, e.g. T08 server/index.js]
+Next up:         [next task from spec/tasks.md, e.g. T09 server/index.js]
 Remaining tasks: [list of unchecked task IDs from spec/tasks.md]
 
 Type /continue to wake Ralph up and resume from here.
@@ -707,7 +773,7 @@ Files to write, in this order:
 9. client/src/components/[component].jsx — one file per component from Phase 3
 10. client/src/pages/[page].jsx — one file per screen, Phase 3 priority order
 11. client/src/App.jsx — import Navigate from react-router-dom, React Router, nav, ModeToggle
-12. client/src/main.jsx — sets data-theme before render
+12. client/src/main.jsx — sets chosen theme before render
 13. README.md at project root (not inside `client/`) — write after all client files; setup in 3 commands
 
 Code rules:
@@ -723,9 +789,10 @@ Code rules:
 - Use **SkeletonLoader** / **StreamingText** / **TypingIndicator** per Phase 3 **AI-UX** and `references/DESIGN_SYSTEM.md` §9.
 - **Composition:** Honor `spec/spec.md` **## Design** anti-generic fields and Phase 3 `LAYOUT_SPEC` / `WEIRD_HOOK`. Prefer asymmetry, mixed density, or a distinct shell over an even N-column card grid as the primary layout.
 - Stat cards compute deltas from real data. Never hardcode delta values.
-- ModeToggle in nav. **Dark mode default** — `data-theme="dark"` on `<html>` before paint; body uses Eclipse dark gradients from DESIGN_SYSTEM §2, not a flat light-gray app background.
+- ModeToggle in nav. Theme default comes from Phase 3 / `spec/spec.md` and must be set on `<html>` before paint.
 - Responsive at 640px. aria-label on all icon-only buttons.
-- **No Tailwind “template kit” defaults as the whole UI:** avoid `bg-gray-50` / `bg-slate-50` page + repeated `bg-white rounded-2xl shadow` cards unless Phase 3 explicitly documented that treatment **and** paired it with `WEIRD_HOOK` + tension. Prefer `var(--bg)`, `var(--surface)`, editorial type scale.
+- **No Tailwind “template kit” defaults as the whole UI:** avoid `bg-gray-50` / `bg-slate-50` page + repeated `bg-white rounded-2xl shadow` cards unless Phase 3 explicitly documented that treatment **and** paired it with `WEIRD_HOOK` + tension. Prefer `var(--bg)`, `var(--surface)`, `var(--text)`, editorial type scale.
+- For future-facing prompts, the UX must visibly change how work gets planned, triaged, or executed. Do not settle for futuristic copy over ordinary mechanics.
 
 If the response is getting very long before all screens are complete, write the current file cleanly
 and emit this message exactly — never stop silently:
@@ -734,7 +801,7 @@ and emit this message exactly — never stop silently:
 Ralph got sleepy mid-build. The computer needed a nap.
 
 Last completed:  [filename just written, e.g. client/src/pages/Dashboard.jsx]
-Next up:         [next task from spec/tasks.md, e.g. T16 Screen 3 page]
+Next up:         [next task from spec/tasks.md, e.g. T18 Screen 3 page]
 Remaining tasks: [list of unchecked task IDs from spec/tasks.md]
 
 Type /continue to wake Ralph up and resume from here.
@@ -777,7 +844,7 @@ FACTORY COMPLETE
 
   App:        [name]
   Stack:      React + Vite · Express · libsql
-  Design:     Ralph Design System + Anti-Generic composition · Dark and Light
+  Design:     Ralph Design System + Anti-Generic composition · Theme-aware
   Spec:       spec/spec.md
   Tasks:      spec/tasks.md · [n] tasks checked
   Tests:      written before code
@@ -786,6 +853,7 @@ FACTORY COMPLETE
   Records:    [n] across [n] entities
   Security:   [verdict]
   Mode:       [fast | normal | advanced]
+  Theme:      [light-default | dark-default]
   Tests run:  [if executed: pass/fail summary | if not: "not executed — run locally"]
   Tokens:     [if reported by environment: input X · output Y · total Z | if not: "not reported — check your IDE token counter"]
 
@@ -1007,7 +1075,7 @@ What it does:
 
 - Reads existing `spec/spec.md` for entities, routes, and screen slugs
 - Reads existing constitution.md for stack and design constraints
-- Re-runs Phase 3 — produces a new design block including **Anti-Generic** sections (`DESIGN_INTENT`, `LAYOUT_SPEC`, `INSPIRATION`, `WEIRD_HOOK`, per-screen `idea:`) plus palette, layout, screens, components
+- Re-runs Phase 3 — produces a new design block including **Anti-Generic** sections (`DESIGN_INTENT`, `LAYOUT_SPEC`, `INSPIRATION`, `WEIRD_HOOK`, per-screen `idea:`) plus palette, layout, screens, components, and theme default
 - Updates **`spec/spec.md` only** in **## Screens** and **## Design** to match the new Phase 3 output (all other spec sections unchanged) so the spec stays aligned with the rebuilt client
 - Re-runs Phase 7B — rewrites the entire client against the new design
 - Does not touch the server, `spec/tasks.md`, tests, or constitution.md (unless you choose to refresh constitution **## Design Principles** from the template — optional)
@@ -1022,7 +1090,6 @@ SCOPE: client only — server unchanged
 ---
 
 ## RULES
-
 
 | Rule             | Value                                                                                                                   |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -1041,7 +1108,9 @@ SCOPE: client only — server unchanged
 | /continue        | After the Ralph sleepy message, resumes from the next unchecked `[ ]` task in spec/tasks.md (after last `[x]`).        |
 | Spec             | spec/spec.md written in Phase 4. Source of truth.                                                                        |
 | Tasks            | spec/tasks.md written in Phase 5. Phases 7A/7B implement in order.                                                       |
-| Interactivity    | Read-only dashboard output is non-compliant. Require mutation flows (forms/edit/delete), feedback states, and one actionable AI accept/reject flow. If Phase 0 **`AI_NATIVE: YES`**, also require ≥2 visible AI surfaces and **AI-UX ≠ NONE** (see **Interaction minimum**). |
+| Interactivity    | Read-only dashboard output is non-compliant. Require mutation flows (forms/edit/delete), feedback states, and one actionable AI accept/reject flow. If Phase 0 **`AI_NATIVE: YES`**, also require ≥2 visible AI surfaces and **AI-UX ≠ NONE**. |
+| PM quality       | Greenfield runs must include adjacent-but-credible PM thinking and promote 1–2 such moves when valuable.               |
+| Theme default    | Chosen in Phase 3 based on product type. Productivity/planning defaults to light unless justified otherwise.            |
 | Tests            | Written in Phase 6 before Phase 7A. Expected to fail until built.                                                       |
 | Constitution     | First file written in Phase 7A. Source-of-truth baseline; `/rebuild` may regenerate it from current spec/contracts.     |
 | Stack            | React + Vite + Tailwind · Express + Node · libsql                                                                       |
@@ -1050,7 +1119,6 @@ SCOPE: client only — server unchanged
 | Ralph            | Phase 0 restate and DEFERRED tags only. Nowhere else.                                                                   |
 | Phases 6 and 8   | Always emitted. Never skipped. Never merged.                                                                            |
 
-
 ---
 
-Ralph Wiggum Loop · v7.3 · Spec-Driven · Ralph Design System
+*v2.0.0 · Swami Chandrasekaran*
