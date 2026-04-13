@@ -6,7 +6,7 @@
 /factory YOUR IDEA  →  spec → tasks → tests → server → client → security
 ```
 
-Ship-it-Ralph runs the **Ralph Wiggum Loop** autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt.  
+Ship-it-Ralph runs the [**Ralph Wiggum Loop**](https://ghuntley.com/loop/) autonomously. It writes the spec first, breaks the work into tasks, writes tests before code, builds the server, confirms the API is healthy, then builds the client against the spec — not against the original prompt.  
 
 Works with [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview), [Cursor](https://cursor.com/), [Claude Code](https://claude.com/product/claude-code), and [Google Antigravity](https://antigravity.google/).
 
@@ -18,7 +18,7 @@ Works with [GitHub Copilot](https://code.visualstudio.com/docs/copilot/overview)
 
 Most AI coding workflows jump straight from prompt to code. That usually means shallow product thinking, fuzzy scope, and UI that looks like a generic dashboard.
 
-Ship-it-Ralph is built around **Spec-Driven Development**:
+Ship-it-Ralph is built around [**Spec-Driven Development**](https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html):
 
 - define the product before writing code
 - make the spec the source of truth
